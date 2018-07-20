@@ -11,7 +11,7 @@
       <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
     </encoder>
   </appender>
-<logger name="com.petstore" level="DEBUG"/>
+<logger name="com.petstore" level="ALL"/>
   <root level="ERROR">
     <appender-ref ref="STDOUT" />
   </root>

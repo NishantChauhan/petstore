@@ -1,9 +1,9 @@
-package com.petstore.pet.domain;
+package com.petstore.pet.repository;
 
 import com.petstore.pet.entities.Pet;
 
 
-public interface PetDao {
+public interface PetRepository {
 	
 	public Pet mapPet(String petJsonString);
 	
