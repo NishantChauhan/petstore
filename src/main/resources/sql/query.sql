@@ -1,3 +1,4 @@
+-- Queries for Pet Store
 -- Query all pets
 
 SELECT 
