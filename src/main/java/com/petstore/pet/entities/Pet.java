@@ -1,11 +1,22 @@
 package com.petstore.pet.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -15,37 +26,33 @@ import javax.persistence.UniqueConstraint;
  */
 
 @Entity
-@Table(name = "pet", schema = "petstoredb", uniqueConstraints= {@UniqueConstraint(columnNames="pet_id")})
-@NamedQueries(value= { @NamedQuery(name="findPetById",query="select p from Pet p where p.id=:pet_id")})
+@Table(name = "pet", schema = "petstoredb", uniqueConstraints = { @UniqueConstraint(columnNames = "pet_id") })
+@NamedQueries(value = { @NamedQuery(name = "findPetById", query = "select p from Pet p where p.id=:pet_id"),
+		@NamedQuery(name = "findPetByStatus", query = "select p from Pet p where p.status=:status") })
 public class Pet {
 
 	@Id
-	@Column(name="pet_id", nullable=false)
+	@Column(name = "pet_id", nullable = false)
 	private Long id = null;
 
-	@Column(name="name", nullable=false)
+	@Column(name = "name", nullable = false)
 	private String name = null;
 
 	@OneToOne
-	@JoinColumn(name="category_id_fk")
+	@JoinColumn(name = "category_id_fk")
 	private Category category = null;
-/*
-	@OneToMany(mappedBy="pet_id_fk", cascade = CascadeType.ALL, orphanRemoval=true)
-	private List<String> photoUrls = new ArrayList<String>();
 
-	@OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name="mtm_pet_id",
-            joinColumns=
-                @JoinColumn(name="tag_id_fk"),
-            inverseJoinColumns=
-                @JoinColumn(name="pet_id_fk")
-        )
+	@ElementCollection
+	@CollectionTable(name = "photo_urls", joinColumns = @JoinColumn(name = "pet_id_fk"))
+	private List<PhotoURL> photoUrls = new ArrayList<PhotoURL>();
+
+	@OneToMany(cascade = CascadeType.MERGE)
+	@JoinTable(name = "mtm_pet_tag", joinColumns = @JoinColumn(name = "pet_id_fk"), inverseJoinColumns = @JoinColumn(name = "tag_id_fk"))
 	private List<Tag> tags = null;
 
-	*//**
+	/**
 	 * pet status in the store
-	 *//*
+	 */
 	public enum StatusEnum {
 		AVAILABLE("available"),
 
@@ -78,13 +85,15 @@ public class Pet {
 		}
 	}
 
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status")
 	private StatusEnum status = null;
 
 	public Pet id(Long id) {
 		this.id = id;
 		return this;
 	}
-*/
+
 	/**
 	 * Get id
 	 * 
@@ -133,27 +142,29 @@ public class Pet {
 	public void setName(String name) {
 		this.name = name;
 	}
-/*
-	public Pet photoUrls(List<String> photoUrls) {
+
+	public Pet photoUrls(List<PhotoURL> photoUrls) {
 		this.photoUrls = photoUrls;
 		return this;
 	}
 
 	public Pet addPhotoUrlsItem(String photoUrlsItem) {
-		this.photoUrls.add(photoUrlsItem);
+		PhotoURL photoUrl = new PhotoURL();
+		photoUrl.setUrl(photoUrlsItem);
+		this.photoUrls.add(photoUrl);
 		return this;
 	}
 
-	*//**
+	/**
 	 * Get photoUrls
 	 * 
 	 * @return photoUrls
-	 **//*
-	public List<String> getPhotoUrls() {
+	 **/
+	public List<PhotoURL> getPhotoUrls() {
 		return photoUrls;
 	}
 
-	public void setPhotoUrls(List<String> photoUrls) {
+	public void setPhotoUrls(List<PhotoURL> photoUrls) {
 		this.photoUrls = photoUrls;
 	}
 
@@ -170,11 +181,11 @@ public class Pet {
 		return this;
 	}
 
-	*//**
+	/**
 	 * Get tags
 	 * 
 	 * @return tags
-	 **//*
+	 **/
 	public List<Tag> getTags() {
 		return tags;
 	}
@@ -188,11 +199,11 @@ public class Pet {
 		return this;
 	}
 
-	*//**
+	/**
 	 * pet status in the store
 	 * 
 	 * @return status
-	 **//*
+	 **/
 	public StatusEnum getStatus() {
 		return status;
 	}
@@ -211,7 +222,7 @@ public class Pet {
 		}
 		Pet pet = (Pet) o;
 		return Objects.equals(this.id, pet.id) && Objects.equals(this.category, pet.category)
-				&& Objects.equals(this.name, pet.name) && Objects.equals(this.photoUrls, pet.photoUrls)
+				&& Objects.equals(this.name, pet.name) // && Objects.equals(this.photoUrls, pet.photoUrls)
 				&& Objects.equals(this.tags, pet.tags) && Objects.equals(this.status, pet.status);
 	}
 
@@ -235,15 +246,15 @@ public class Pet {
 		return sb.toString();
 	}
 
-	*//**
+	/**
 	 * Convert the given object to string with each line indented by 4 spaces
 	 * (except the first line).
-	 *//*
+	 */
 	private String toIndentedString(java.lang.Object o) {
 		if (o == null) {
 			return "null";
 		}
 		return o.toString().replace("\n", "\n    ");
 	}
-*/
+
 }

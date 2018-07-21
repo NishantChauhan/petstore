@@ -60,17 +60,14 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `petstoredb`.`PHOTO_URL`
+-- Table `petstoredb`.`PHOTO_URLS`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `petstoredb`.`PHOTO_URL` ;
+DROP TABLE IF EXISTS `petstoredb`.`PHOTO_URLS` ;
 
 SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `petstoredb`.`PHOTO_URL` (
-  `PHOTO_URL_ID` BIGINT NOT NULL,
+CREATE TABLE IF NOT EXISTS `petstoredb`.`PHOTO_URLS` (
   `URL` VARCHAR(4000) NOT NULL DEFAULT 'http://localhost:8080/photoUrl/default/ImageNotFound.jpg',
   `PET_ID_FK` BIGINT NOT NULL,
-  PRIMARY KEY (`PHOTO_URL_ID`),
-  UNIQUE INDEX `PHOTO_URL_ID_UNIQUE` (`PHOTO_URL_ID` ASC),
   INDEX `fk_PHOTO_URL_PET_idx` (`PET_ID_FK` ASC),
   CONSTRAINT `fk_PHOTO_URLS_PET1`
     FOREIGN KEY (`PET_ID_FK`)
@@ -126,7 +123,6 @@ SHOW WARNINGS;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
 
 CREATE USER IF NOT EXISTS 'petadmin'@'localhost' IDENTIFIED BY 'petadmin';
 GRANT ALL PRIVILEGES ON *.* TO 'petadmin'@'localhost'    WITH GRANT OPTION;

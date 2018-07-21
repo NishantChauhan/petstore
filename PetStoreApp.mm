@@ -30,7 +30,16 @@
 <node CREATED="1532007266450" ID="ID_228648266" MODIFIED="1532007277974" TEXT="Forward Engineer"/>
 </node>
 <node CREATED="1532090933804" ID="ID_184497890" MODIFIED="1532090936317" POSITION="right" TEXT="Hibernate">
-<node CREATED="1532090937486" ID="ID_1334730928" MODIFIED="1532090964125" TEXT="EntityRelationShips all messed up"/>
+<node CREATED="1532090937486" ID="ID_1334730928" MODIFIED="1532090964125" TEXT="EntityRelationShips all messed up">
+<node CREATED="1532127597573" ID="ID_1485908116" MODIFIED="1532134876117" TEXT="Photo URL to be ElementCollection"/>
+<node CREATED="1532134900344" ID="ID_133136918" MODIFIED="1532134910647" TEXT="Specify CollectionTable for Photo URL"/>
+<node CREATED="1532134876550" ID="ID_1163699270" MODIFIED="1532134899502" TEXT="Create Embeddable PhotoURL Entity"/>
+</node>
+<node CREATED="1532127606904" ID="ID_1316638500" MODIFIED="1532127630577" TEXT="@Enumerated(EnumType.String) for enums storing Enum as string in DB">
+<node CREATED="1532127631779" ID="ID_25118329" MODIFIED="1532127645464" TEXT="the Enum Name should match the DB"/>
+</node>
+<node CREATED="1532141431239" ID="ID_1447928771" MODIFIED="1532141442065" TEXT="Cannot access same entity with two sessions"/>
+<node CREATED="1532182519035" ID="ID_1971932295" MODIFIED="1532182527905" TEXT="How to query and update in same transaction"/>
 </node>
 <node CREATED="1532091293461" ID="ID_812331146" MODIFIED="1532091295612" POSITION="left" TEXT="Issues">
 <node CREATED="1532090965386" ID="ID_389908765" MODIFIED="1532090977969" TEXT="Unable to start server due to error - Could not obtain transaction-synchronized Session for current thread">
