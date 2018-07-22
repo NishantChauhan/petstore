@@ -2,39 +2,26 @@ package com.petstore.pet.utilities.filestorage.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.stream.Stream;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.petstore.pet.utilities.filestorage.StorageProperties;
 import com.petstore.pet.utilities.filestorage.StorageService;
 import com.petstore.pet.utilities.filestorage.exceptions.StorageException;
-import com.petstore.pet.utilities.filestorage.exceptions.StorageFileNotFoundException;
 
 @Service
 public class FileSystemStorageService implements StorageService {
 
-    private Path rootLocation;
-
-    @Autowired
-    public FileSystemStorageService(StorageProperties properties) {
-        this.rootLocation = Paths.get(properties.getLocation());
-    }
-
-    @Override
-    public void store(MultipartFile file, String url) {
+     @Override
+    public void store(MultipartFile file, Path url) {
         String filename = StringUtils.cleanPath(file.getOriginalFilename());
+        
+        
         
         try {
             if (file.isEmpty()) {
@@ -47,7 +34,7 @@ public class FileSystemStorageService implements StorageService {
                                 + filename);
             }
             try (InputStream inputStream = file.getInputStream()) {
-                Files.copy(inputStream, this.rootLocation.resolve(filename),
+                Files.copy(inputStream, url.resolve(filename),
                     StandardCopyOption.REPLACE_EXISTING);
                 
             }
@@ -57,12 +44,13 @@ public class FileSystemStorageService implements StorageService {
         }
     }
 
+     /*
     @Override
-    public Stream<Path> loadAll() {
+    public Stream<Path> loadAll(Path rootLocation) {
         try {
-            return Files.walk(this.rootLocation, 1)
-                .filter(path -> !path.equals(this.rootLocation))
-                .map(this.rootLocation::relativize);
+            return Files.walk(rootLocation, 1)
+                .filter(path -> !path.equals(rootLocation))
+                .map(rootLocation::relativize);
         }
         catch (IOException e) {
             throw new StorageException("Failed to read stored files", e);
@@ -70,6 +58,7 @@ public class FileSystemStorageService implements StorageService {
 
     }
 
+ 
     @Override
     public Path load(String filename) {
         return rootLocation.resolve(filename);
@@ -98,9 +87,9 @@ public class FileSystemStorageService implements StorageService {
     public void deleteAll() {
         FileSystemUtils.deleteRecursively(rootLocation.toFile());
     }
-
+*/
     @Override
-    public void init() {
+    public void init(Path rootLocation) {
         try {
             Files.createDirectories(rootLocation);
         }

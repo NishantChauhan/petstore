@@ -1,6 +1,7 @@
 package com.petstore.pet.repository;
 
-import java.io.File;
+import java.net.URI;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,16 +13,21 @@ import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.petstore.pet.entities.Pet;
 import com.petstore.pet.entities.Pet.StatusEnum;
+import com.petstore.pet.entities.PhotoURL;
 import com.petstore.pet.utilities.LoggerUtil;
 import com.petstore.pet.utilities.filestorage.StorageService;
-import com.petstore.pet.entities.PhotoURL;
 
 @Repository
+@PropertySource("classpath:application.properties")
 public class PetRepositoryImpl implements PetRepository {
 
 	final static Logger logger = LoggerFactory.getLogger(PetRepositoryImpl.class);
@@ -31,6 +37,12 @@ public class PetRepositoryImpl implements PetRepository {
 	
 	@Autowired
 	StorageService storageService;
+	
+	@Autowired
+	Environment env;
+	
+	@Value("${imageURLrootLocation}")
+	String imageRootLocation;
 
 
 	public Pet mapPet(String petJsonString) {
@@ -255,12 +267,13 @@ public class PetRepositoryImpl implements PetRepository {
 			throw new Exception ("Image Not Present int the request");
 		}
 		
-		String imageName=image.getName();
-		String url = prepareURL(fetchedPet.getCategory().getName(),fetchedPet.getName(),fetchedPet.getId(),imageName);
+		String imageName=StringUtils.cleanPath(image.getOriginalFilename());
+		String urlPath = prepareURLPath(fetchedPet.getCategory().getName(),fetchedPet.getName(),fetchedPet.getId());
 		PhotoURL photoURL = new PhotoURL();
-		photoURL.setUrl(url);
-
-		storageService.store(image,url);
+		photoURL.setUrl(urlPath+imageName);
+		
+		storageService.init(Paths.get(new URI(imageRootLocation+urlPath)));
+		storageService.store(image,Paths.get(new URI(imageRootLocation+urlPath)));
 
 		
 		List<PhotoURL> photoUrlList= fetchedPet.getPhotoUrls();
@@ -272,7 +285,7 @@ public class PetRepositoryImpl implements PetRepository {
 			Transaction tx = session.beginTransaction();
 			session.update(fetchedPet);
 			tx.commit();
-			logger.info("Uploaded image "+url+" for pet with id: " + fetchedPet.getId());
+			logger.info("Uploaded image "+urlPath+imageName+" for pet with id: " + fetchedPet.getId());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -284,9 +297,9 @@ public class PetRepositoryImpl implements PetRepository {
 	}
 
 
-	private String prepareURL(String category, String name, Long id, String imageName) {
+	private String prepareURLPath(String category, String name, Long id) {
 		StringBuilder strBld = new StringBuilder(4000);
-		strBld.append("/photoURL/").append(category).append("/").append(name).append("/").append(String.valueOf(id)).append("/").append(imageName);
+		strBld.append("/photoURL/").append(category).append("/").append(name).append("-id-").append(String.valueOf(id)).append("/");
 		return strBld.toString();
 	}
 

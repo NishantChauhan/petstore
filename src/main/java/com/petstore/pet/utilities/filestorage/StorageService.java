@@ -1,17 +1,16 @@
 package com.petstore.pet.utilities.filestorage;
 
-import org.springframework.core.io.Resource;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.nio.file.Path;
-import java.util.stream.Stream;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public interface StorageService {
 
-    void init();
+    void init(Path location);
 
-    void store(MultipartFile file, String url);
+    void store(MultipartFile file, Path url);
 
+    /*
     Stream<Path> loadAll();
 
     Path load(String filename);
@@ -19,5 +18,6 @@ public interface StorageService {
     Resource loadAsResource(String filename);
 
     void deleteAll();
+    */
 
 }
