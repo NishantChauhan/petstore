@@ -1,0 +1,9 @@
+<div class="container">
+  <div class="form-group">
+    <label for="">Enter Pet ID</label>
+    <input  type="text" class="form-control" name="petIdInputBox" id="" aria-describedby="helpId" placeholder="e.g. 10"/>
+    <small id="helpId" class="form-text text-muted">ID of the pet that you want to search</small>
+  </div>
+  <input name="Find Pet" id="btn_findpet" class="btn btn-primary|secondary|success|danger|warning|info|light|dark|link" type="button" value="Find Pet" (click)="onFindPetClick()">
+  <app-display-pet [petId]="petId"></app-display-pet>
+</div>
