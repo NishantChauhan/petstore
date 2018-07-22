@@ -82,7 +82,7 @@ public class PetController {
 	
 	// Upload Image
 
-	@RequestMapping(path="/pet/{petId}/uploadImage", method= {RequestMethod.POST},produces= {"application/json"} /*, consumes= {"multipart/form-data"}*/)
+	@RequestMapping(path="/pet/{petId}/uploadImage", method= {RequestMethod.POST},produces= {"application/json"} , consumes= {"multipart/form-data"})
 	Pet uploadPetImage (@PathVariable String petId, @RequestBody MultipartFile image) throws Exception {
 
 		petRepository.uploadImage(Long.valueOf(petId),image);
