@@ -1,4 +1,4 @@
-package com.petstore.utilities;
+package com.petstore.pet.utilities;
 
 import org.slf4j.Logger;
 

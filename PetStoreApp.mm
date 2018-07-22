@@ -38,8 +38,12 @@
 <node CREATED="1532127606904" ID="ID_1316638500" MODIFIED="1532127630577" TEXT="@Enumerated(EnumType.String) for enums storing Enum as string in DB">
 <node CREATED="1532127631779" ID="ID_25118329" MODIFIED="1532127645464" TEXT="the Enum Name should match the DB"/>
 </node>
+<node CREATED="1532182519035" ID="ID_1971932295" MODIFIED="1532182527905" TEXT="How to query and update in same transaction">
 <node CREATED="1532141431239" ID="ID_1447928771" MODIFIED="1532141442065" TEXT="Cannot access same entity with two sessions"/>
-<node CREATED="1532182519035" ID="ID_1971932295" MODIFIED="1532182527905" TEXT="How to query and update in same transaction"/>
+</node>
+<node CREATED="1532206784683" ID="ID_814825556" MODIFIED="1532206793638" TEXT="how to write named query for MTM tables">
+<node CREATED="1532206999136" ID="ID_639448856" MODIFIED="1532207023087" TEXT="use the property (member) of the parent class"/>
+</node>
 </node>
 <node CREATED="1532091293461" ID="ID_812331146" MODIFIED="1532091295612" POSITION="left" TEXT="Issues">
 <node CREATED="1532090965386" ID="ID_389908765" MODIFIED="1532090977969" TEXT="Unable to start server due to error - Could not obtain transaction-synchronized Session for current thread">
