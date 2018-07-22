@@ -28,7 +28,11 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "pet", schema = "petstoredb", uniqueConstraints = { @UniqueConstraint(columnNames = "pet_id") })
 @NamedQueries(value = { @NamedQuery(name = "findPetById", query = "select p from Pet p where p.id=:pet_id"),
-		@NamedQuery(name = "findPetByStatus", query = "select p from Pet p where p.status=:status") })
+		@NamedQuery(name = "findPetsByStatus", query = "select p from Pet p where p.status=:status"),
+		@NamedQuery(name = "findPetsByName", query = "select p from Pet p where p.name=:name"),
+		@NamedQuery(name = "findPetsByCategory", query = "select p from Pet p JOIN p.category c where c.name =:category"),
+		@NamedQuery(name = "findPetsByTags", query = "select p from Pet p JOIN p.tags t where t.name in :tags ") 
+})
 public class Pet {
 
 	@Id

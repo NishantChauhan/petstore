@@ -1,5 +1,8 @@
 -- Query all pets
 
+-- Queries for Pet Store
+-- Query all pets
+
 SELECT 
     pet.name,
     pet.status,
