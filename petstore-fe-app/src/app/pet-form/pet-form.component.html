@@ -1,0 +1,31 @@
+<div class="container">
+  <form>
+    <div class="form-group">
+      <label for="petId">Pet Id</label>
+      <input type="text" class="form-control" id="petCategory" required [(ngModel)]="petId" name="petId">
+    </div>
+    <button type="submit" class="btn btn-success" (click)="onSubmit()">Find Pet</button>
+    <br>
+    <br>
+    <br>
+    <div *ngIf="selectedPet; else elseBlock">
+      <div class="col-sm-6">
+        <img [src]="selectedPet.photoUrl[0]" class="img-fluid|thumbnail rounded-top|rounded-right|rounded-bottom|rounded-left|rounded-circle|"
+          alt="">
+      </div>
+      <div class="col-sm-6">
+        <p>Pet Id: {{selectedPet.id}}</p>
+        <p>Pet Name: {{selectedPet.name}}</p>
+        <p>Pet Category: {{selectedPet.category}}</p>
+        <p>Pet Tags:
+          <span *ngFor="let tag of selectedPet.tags">{{tag}} | </span>
+        </p>
+      </div>
+    </div>
+    <ng-template #elseBlock>
+      <div *ngIf="submitted">
+        <p> No Such Pet Exists !!</p>
+      </div>
+    </ng-template>
+  </form>
+</div>

@@ -1,18 +1,18 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { FindPetComponent } from './find-pet/find-pet.component';
-import { DisplayPetComponent } from './display-pet/display-pet.component';
+import { PetFormComponent } from './pet-form/pet-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FindPetComponent,
-    DisplayPetComponent
+    PetFormComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
