@@ -1,4 +1,4 @@
-package com.petstore.pet.repository;
+package com.petstore.pet.repository.impl;
 
 import java.net.URI;
 import java.nio.file.Paths;
@@ -13,9 +13,7 @@ import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.petstore.pet.entities.Pet;
 import com.petstore.pet.entities.Pet.StatusEnum;
 import com.petstore.pet.entities.PhotoURL;
+import com.petstore.pet.repository.PetRepository;
 import com.petstore.pet.utilities.LoggerUtil;
 import com.petstore.pet.utilities.filestorage.StorageService;
 
@@ -38,12 +37,6 @@ public class PetRepositoryImpl implements PetRepository {
 	@Autowired
 	StorageService storageService;
 	
-	@Autowired
-	Environment env;
-	
-	@Value("${imageURLrootLocation}")
-	String imageRootLocation;
-
 
 	public Pet mapPet(String petJsonString) {
 		return null;
@@ -268,12 +261,12 @@ public class PetRepositoryImpl implements PetRepository {
 		}
 		
 		String imageName=StringUtils.cleanPath(image.getOriginalFilename());
-		String urlPath = prepareURLPath(fetchedPet.getCategory().getName(),fetchedPet.getName(),fetchedPet.getId());
+		String urlPath = storageService.preparePhotoURLPath(fetchedPet.getCategory().getName(),fetchedPet.getName(),fetchedPet.getId());
 		PhotoURL photoURL = new PhotoURL();
 		photoURL.setUrl(urlPath+imageName);
 		
-		storageService.init(Paths.get(new URI(imageRootLocation+urlPath)));
-		storageService.store(image,Paths.get(new URI(imageRootLocation+urlPath)));
+		storageService.init(Paths.get(new URI(urlPath)));
+		storageService.store(image,Paths.get(new URI(urlPath)));
 
 		
 		List<PhotoURL> photoUrlList= fetchedPet.getPhotoUrls();
@@ -294,13 +287,6 @@ public class PetRepositoryImpl implements PetRepository {
 
 		return true;
 
-	}
-
-
-	private String prepareURLPath(String category, String name, Long id) {
-		StringBuilder strBld = new StringBuilder(4000);
-		strBld.append("/photoURL/").append(category).append("/").append(name).append("-id-").append(String.valueOf(id)).append("/");
-		return strBld.toString();
 	}
 
 

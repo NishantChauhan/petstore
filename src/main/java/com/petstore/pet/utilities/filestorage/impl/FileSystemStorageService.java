@@ -2,20 +2,38 @@ package com.petstore.pet.utilities.filestorage.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.petstore.pet.repository.impl.PetRepositoryImpl;
+import com.petstore.pet.utilities.LoggerUtil;
 import com.petstore.pet.utilities.filestorage.StorageService;
 import com.petstore.pet.utilities.filestorage.exceptions.StorageException;
 
 @Service
 public class FileSystemStorageService implements StorageService {
+	
+	final static Logger logger = LoggerFactory.getLogger(FileSystemStorageService.class);
+	
+	@Autowired
+	Environment env;
+	
+	@Value("${imageURLrootLocation}")
+	String imageRootLocation;
 
      @Override
     public void store(MultipartFile file, Path url) {
@@ -27,12 +45,12 @@ public class FileSystemStorageService implements StorageService {
             if (file.isEmpty()) {
                 throw new StorageException("Failed to store empty file " + filename);
             }
-            if (filename.contains("..")) {
-                // This is a security check
-                throw new StorageException(
-                        "Cannot store file with relative path outside current directory "
-                                + filename);
-            }
+//            if (filename.contains("..")) {
+//                // This is a security check
+//                throw new StorageException(
+//                        "Cannot store file with relative path outside current directory "
+//                                + filename);
+//            }
             try (InputStream inputStream = file.getInputStream()) {
                 Files.copy(inputStream, url.resolve(filename),
                     StandardCopyOption.REPLACE_EXISTING);
@@ -44,7 +62,23 @@ public class FileSystemStorageService implements StorageService {
         }
     }
 
-     /*
+
+ 
+    @Override
+    public Resource loadFileAsResource(String filename) throws Exception {
+    	
+    	
+		Path  path = Paths.get(new URI(filename));
+		byte[] fileArray = Files.readAllBytes(path);
+		
+		logger.debug("Loaded file with URI: " + filename);
+		
+		Resource imageResource=new ByteArrayResource(fileArray);
+		
+		LoggerUtil.exit(logger);
+        return imageResource;
+    }
+    /*
     @Override
     public Stream<Path> loadAll(Path rootLocation) {
         try {
@@ -56,12 +90,6 @@ public class FileSystemStorageService implements StorageService {
             throw new StorageException("Failed to read stored files", e);
         }
 
-    }
-
- 
-    @Override
-    public Path load(String filename) {
-        return rootLocation.resolve(filename);
     }
 
     @Override
@@ -97,4 +125,12 @@ public class FileSystemStorageService implements StorageService {
             throw new StorageException("Could not initialize storage", e);
         }
     }
+    
+    @Override
+	public String preparePhotoURLPath(String category, String name, Long id) {
+		StringBuilder strBld = new StringBuilder(4000);
+		strBld.append(imageRootLocation).append("photoURL/").append(category).append("/").append(name).append("-id-")
+				.append(String.valueOf(id)).append("/");
+		return strBld.toString();
+	}
 }

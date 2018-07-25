@@ -1,8 +1,7 @@
--- Query all pets
+
 
 -- Queries for Pet Store
 -- Query all pets
-
 SELECT 
     pet.name,
     pet.status,
@@ -26,6 +25,8 @@ WHERE
  ORDER BY pet_id
 ;
 
+-- Replace photoURL
+update photo_urls set url = replace(url,'ph','../../assets/ph') where pet_id_fk in (1,2,3) ;
 
 -- query pet 10
 SELECT 

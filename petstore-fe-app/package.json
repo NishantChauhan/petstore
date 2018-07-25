@@ -21,10 +21,13 @@
     "@angular/platform-browser-dynamic": "^6.0.3",
     "@angular/router": "^6.0.3",
     "bootstrap": "^4.1.2",
+    "classlist.js": "^1.1.20150312",
     "core-js": "^2.5.4",
-    "jquery": "^1.9.1",
+    "hoek": "^5.0.3",
+    "jquery": "^1.12.4",
     "popper.js": "^1.14.3",
     "rxjs": "^6.0.0",
+    "web-animations-js": "^2.3.1",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

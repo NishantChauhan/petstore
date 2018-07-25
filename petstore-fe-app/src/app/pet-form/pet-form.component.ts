@@ -1,3 +1,4 @@
+import { PetService } from './../pet.service';
 import { Pet } from '../pet';
 import { Component } from '@angular/core';
 
@@ -8,21 +9,25 @@ import { Component } from '@angular/core';
 })
 export class PetFormComponent {
   petId: number;
-
-  pets: Pet[] =
-  [new Pet( 1, 'Tom', 'pussy-cat', ['../../assets/images/Tom.png'], ['cartoon', 'loves-milk'], 'AVAILABLE' ),
-  new Pet( 2, 'Jerry', 'house-mouse', ['../../assets/images/Jerry.png'], ['cartoon', 'loves-cheese'], 'PENDING' ),
-  new Pet( 3, 'Spike', 'bull-dog', ['../../assets/images/Spike.png'], ['cartoon', 'hates-cat'], 'SOLD' )
-    ];
-
   selectedPet: Pet;
-
   submitted = false;
+
+  constructor(private petService: PetService) {}
+
 
   onSubmit() {
     this.submitted = true;
-    this.selectedPet = this.pets[this.petId - 1];
+    this.petService.getPet(this.petId).subscribe(pet => {
 
+      // To test integration of Angular and SpringBoot
+      // if (pet) {
+      //   pet.photoUrls.forEach(photoUrl => {
+      //     photoUrl.url = 'http://localhost:8080/' + photoUrl.url;
+      //   });
+      // }
+      console.log(pet);
+      this.selectedPet = pet;
+    });
   }
 
   // TODO: Remove this when we're done
