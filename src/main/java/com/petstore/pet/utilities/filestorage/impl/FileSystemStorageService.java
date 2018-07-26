@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.petstore.pet.repository.impl.PetRepositoryImpl;
 import com.petstore.pet.utilities.LoggerUtil;
 import com.petstore.pet.utilities.filestorage.StorageService;
 import com.petstore.pet.utilities.filestorage.exceptions.StorageException;
