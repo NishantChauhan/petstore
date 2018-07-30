@@ -1,0 +1,51 @@
+<div>
+  <form>
+
+    <div class="form-group">
+
+      <label for="">Name</label>
+      <input type="text" class="form-control" aria-describedby="name-helpId" placeholder="" [(ngModel)]="pet.name" name="pet-name">
+      <small id="name-helpId" class="form-text text-muted">Pet's Name e.g. Tommy</small>
+    </div>
+    <div class="form-group">
+      <label for="category">Category</label>
+      <select [(ngModel)]="pet.category" class="form-control" aria-describedby="category-helpId" name="pet-category" id="category"
+        required>
+        <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
+      </select>
+      <small id="category-helpId" class="form-text text-muted">Pet's Category e.g. bull-dog</small>
+    </div>
+    <div class="form-group">
+      <label for="status">Status</label>
+      <select [(ngModel)]="pet.status" class="form-control" aria-describedby="status-helpId" name="pet-status" id="status" required>
+        <option *ngFor="let status of statuses" [ngValue]="status">{{status}}</option>
+      </select>
+      <small id="status-helpId" class="form-text text-muted">Pet's Status e.g. 'AVAILABLE','PENDING','SOLD'</small>
+    </div>
+
+    <div class="form-group">
+      <label>Tags</label>
+      <div>
+        <label class="form-check-label" aria-describedby="tags-helpId" *ngFor="let tag of tags;  let i = index">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="tagsChecked[i]" name="tag[i]">
+          <span style="margin: 20px;">{{tags[i].name}}</span>
+        </label>
+      </div>
+      <div>
+        <small id="tags-helpId" class="form-text text-muted">Pet's Tags e.g. 'cartoon'</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-success" (click)="addPet()">Add Pet</button>
+    </div>
+  </form>
+</div>
+
+
+<!-- <div class="form-check">
+  <label class="form-check-label" style="margin: 20px" *ngFor="let tag of tags; let i = index">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="tagsChecked[i]" name="tag[i]">
+      {{tags[i].name}}
+    </label>
+</div> -->

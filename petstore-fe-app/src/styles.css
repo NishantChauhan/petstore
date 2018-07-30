@@ -1,7 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css');
-.jumbotron{
+.jumbotron {
   background-color: #5cb85c;
-  /*background-color:none !important;*/
-  color: #FFFFFF;
-  }
+  color: white;
+}

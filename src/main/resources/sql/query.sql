@@ -1,5 +1,8 @@
 
-
+SELECT * FROM petstoredb.pet;
+SELECT * FROM petstoredb.category;
+SELECT * FROM petstoredb.tag;
+SELECT * FROM petstoredb.photo_urls;
 -- Queries for Pet Store
 -- Query all pets
 SELECT 
@@ -49,7 +52,7 @@ WHERE
         AND tag.tag_id = mtm_pet_tag.tag_id_fk
         AND pet.pet_id = mtm_pet_tag.pet_id_fk
         AND photo_urls.pet_id_fk = pet.pet_id
-        and pet_id = 10
+        and pet_id = 4
 ORDER BY pet_id
 ;
 

@@ -1,16 +1,18 @@
-import { PetService } from './../pet.service';
-import { Pet } from '../pet';
-import { Component } from '@angular/core';
+import { Mode } from '../../mode';
+import { PetService } from '../../pet.service';
+import { Pet } from '../../pet';
+import { Component} from '@angular/core';
 
 @Component({
-  selector: 'app-pet-form',
-  templateUrl: './pet-form.component.html',
-  styleUrls: ['./pet-form.component.css']
+  selector: 'app-pet-search-by-id',
+  templateUrl: './pet-search-by-id.component.html',
+  styleUrls: ['./pet-search-by-id.component.css']
 })
-export class PetFormComponent {
+export class PetSearchByIdComponent {
   petId: number;
   selectedPet: Pet;
   submitted = false;
+  mode = Mode.READ_ONLY;
 
   constructor(private petService: PetService) {}
 

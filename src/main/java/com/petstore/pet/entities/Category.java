@@ -18,6 +18,8 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -27,6 +29,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name="category", schema="petstoredb", uniqueConstraints= {@UniqueConstraint(columnNames="category_id"),@UniqueConstraint(columnNames="category_name")})
+@NamedQueries(value = { @NamedQuery(name = "fetchAllCategories", query = "select distinct c from Category c order by id") })
 public class Category {
 	
 	@Id

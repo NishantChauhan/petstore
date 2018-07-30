@@ -18,9 +18,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.petstore.pet.entities.Category;
 import com.petstore.pet.entities.Pet;
 import com.petstore.pet.entities.Pet.StatusEnum;
 import com.petstore.pet.entities.PhotoURL;
+import com.petstore.pet.entities.Tag;
 import com.petstore.pet.repository.PetRepository;
 import com.petstore.pet.utilities.LoggerUtil;
 import com.petstore.pet.utilities.filestorage.StorageService;
@@ -289,6 +291,35 @@ public class PetRepositoryImpl implements PetRepository {
 
 	}
 
+
+	@Override
+	public List<Category> fetchAllCategories() throws Exception {
+		LoggerUtil.entry(logger);
+		Session session = this.sessionFactory.getCurrentSession();
+
+		@SuppressWarnings("unchecked")
+		TypedQuery<Category> query = session.getNamedQuery("fetchAllCategories");
+		List<Category> categories = query.getResultList();
+		
+
+		LoggerUtil.exit(logger);
+		return categories;
+	}
+
+
+	@Override
+	public List<Tag> fetchAllTags() throws Exception {
+		LoggerUtil.entry(logger);
+		Session session = this.sessionFactory.getCurrentSession();
+
+		@SuppressWarnings("unchecked")
+		TypedQuery<Tag> query = session.getNamedQuery("fetchAllTags");
+		List<Tag> tags = query.getResultList();
+		
+
+		LoggerUtil.exit(logger);
+		return tags;
+	}
 
 	/*
 	 * public static Pet getDummyPet(){

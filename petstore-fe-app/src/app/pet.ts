@@ -1,11 +1,11 @@
 export class Pet {
+  public id: number;
+  public name: string;
+  public category: Category;
+  public photoUrls: PhotoURL[];
+  public tags: Tag[];
+  public status: string;
   constructor(
-    public id: number,
-    public name: string,
-    public category: Category,
-    public photoUrls: PhotoURL[],
-    public tags: Tags[],
-    public status: string
   ) {}
 }
     // new Pet( 1, 'Tom',
@@ -19,6 +19,6 @@ export class PhotoURL {
 export class Category {
   constructor(public id: number, public name: string) {}
 }
-export class Tags {
+export class Tag {
   constructor(public id: number, public name: string) {}
 }

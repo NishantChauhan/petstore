@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <form class="form-inline">
+      <div class="form-group">
+        <div class="col-sm-5">
+          <label for="petId" style="width: 90px; ">Enter Pet Id</label>
+        </div>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" maxlength="2" style="width: 50px; margin-right: 1em;" id="petCategory" required [(ngModel)]="petId"
+            name="petId">
+        </div>
+        <div class="col-sm-4">
+          <button type="submit" class="btn btn-success" (click)="onSubmit()">Find Pet</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="row" style="padding-top: 40px;">
+    <div *ngIf="submitted">
+      <app-pet-display-form [selectedPet]="selectedPet" [mode]="mode"></app-pet-display-form>
+    </div>
+  </div>
+</div>

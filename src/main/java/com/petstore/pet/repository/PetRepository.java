@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.petstore.pet.entities.Category;
 import com.petstore.pet.entities.Pet;
+import com.petstore.pet.entities.Tag;
 
 public interface PetRepository {
 
@@ -30,5 +32,8 @@ public interface PetRepository {
 
 	public boolean uploadImage(Long petId, MultipartFile image) throws Exception;
 
+	public List<Category> fetchAllCategories() throws Exception;
+	
+	public List<Tag> fetchAllTags() throws Exception;
 
 }

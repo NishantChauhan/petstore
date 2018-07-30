@@ -1,0 +1,30 @@
+<div class="row">
+<form class="form-inline">
+
+    <div *ngIf="selectedPet; else elseBlock">
+      <div class="col-sm-4">
+      <img [src]="selectedPet.photoUrls[0].url" style="width: 266px; height: 235px;" alt="">
+      </div>
+      <div class="col-sm-8" style="padding-top: 40px; margin: 10px;">
+      <p>
+        <span class="badge" style="width: 60px; padding-right: 60px;">Name</span> {{selectedPet.name}}</p>
+      <p>
+        <span class="badge" style="width: 60px; padding-right: 60px;">Id</span> {{selectedPet.id}}</p>
+      <p>
+        <span class="badge" style="width: 60px; padding-right: 60px;">Category</span> {{selectedPet.category.name}}</p>
+      <p>
+        <span class="badge" style="width: 60px; padding-right: 60px;">Tags</span>
+        <span *ngFor="let tag of selectedPet.tags"> {{tag.name}},</span> etc.</p>
+      </div>
+    </div>
+    <ng-template #elseBlock>
+      <div class="col-sm-6">
+      <figure>
+        <img src="assets/BrokenImage.jpg" class="square" style="width: 266px; height: 235px;" alt="">
+        <figcaption style="color: red; font-size: 150%;">No such pet exists !!!</figcaption>
+      </figure>
+      </div>
+    </ng-template>
+
+</form>
+</div>

@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.petstore.pet.entities.Category;
 import com.petstore.pet.entities.Pet;
+import com.petstore.pet.entities.Tag;
 import com.petstore.pet.repository.PetRepository;
 import com.petstore.pet.utilities.filestorage.StorageService;
 
@@ -25,21 +29,26 @@ public class PetController {
 
 	@Autowired
 	PetRepository petRepository;
-	
+
 	@Autowired
 	StorageService fileStoreService;
-	
+
+	/** Regex Mappingto support Angular Mapping withing Tomcat */
+	@GetMapping(value = "/**/{[path:[^\\.]*}")
+	public ModelAndView forward() {
+		return new ModelAndView("/index.html");
+	}
 
 	@RequestMapping(path = "/photoURL/{category}/{name}-id-{id}/{imageName}", method = { RequestMethod.GET })
 	public ResponseEntity<Resource> loadImage(@PathVariable String category, @PathVariable String name,
 			@PathVariable String id, @PathVariable String imageName) throws Exception {
-		
+
 		String imageFilePath = fileStoreService.preparePhotoURLPath(category, name, Long.valueOf(id));
 		HttpHeaders responseHeaders = new HttpHeaders();
-		Resource imageFile = fileStoreService.loadFileAsResource(imageFilePath+imageName);
+		Resource imageFile = fileStoreService.loadFileAsResource(imageFilePath + imageName);
 		responseHeaders.setContentType(MediaType.IMAGE_PNG);
 		responseHeaders.setContentLength(imageFile.contentLength());
-		return new ResponseEntity<Resource>(imageFile,responseHeaders, HttpStatus.CREATED);
+		return new ResponseEntity<Resource>(imageFile, responseHeaders, HttpStatus.CREATED);
 	}
 	// Find Pets
 
@@ -110,6 +119,18 @@ public class PetController {
 		petRepository.uploadImage(Long.valueOf(petId), image);
 
 		return petRepository.findPetById(Long.valueOf(petId));
+	}
+
+	@RequestMapping(path = "/fetchAllCategories", method = { RequestMethod.GET }, produces = { "application/json" })
+	List<Category> fetchAllCategories() throws Exception {
+
+		return petRepository.fetchAllCategories();
+	}
+	
+	@RequestMapping(path = "/fetchAllTags", method = { RequestMethod.GET }, produces = { "application/json" })
+	List<Tag> fetchAllTags() throws Exception {
+
+		return petRepository.fetchAllTags();
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.petstore;
 
+import java.io.IOException;
+
 import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
@@ -8,9 +10,12 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.Resource;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.resource.PathResourceResolver;
 
 /**
  * @author Nishant
@@ -20,7 +25,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * */
 @Configuration
 @ComponentScan(basePackages= {"com.petstore.pet"})
-public class ApplicationConfiguration implements WebMvcConfigurer{
+public class ApplicationConfiguration
+{
 	
 	@Value("${spring.datasource.driverClassName}")
 	String driverClassName;
@@ -55,14 +61,4 @@ public class ApplicationConfiguration implements WebMvcConfigurer{
 		sessionBuilder.scanPackages("com.petstore.pet.entities");
 		return sessionBuilder.buildSessionFactory();
 	}
-	
-
-	/**
-	 * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurer#addViewControllers(org.springframework.web.servlet.config.annotation.ViewControllerRegistry)
-	 */
-	@Override
-	public void addViewControllers(ViewControllerRegistry registry) {
-	    registry.addViewController("/").setViewName("forward:/index.html");
-	}
-	
 }
