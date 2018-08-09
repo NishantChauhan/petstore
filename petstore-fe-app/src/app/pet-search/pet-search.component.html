@@ -1,0 +1,12 @@
+<div class="alert alert-success text-center" role="alert">
+  <strong>Search Pets</strong>
+</div>
+<div class="btn-group" style="width: 100%;">
+  <a name="search-by-id" id="search-by-id" class="btn btn-success" style="width: 25%;" [routerLink]="['petById']" role="button">By Id</a>
+  <a name="search-by-cat" id="search-by-cat" class="btn btn-success" style="width: 25%;" [routerLink]="['petsByCategory']" role="button" disabled>By Category</a>
+  <a name="search-by-tag" id="search-by-tag" class="btn btn-success" style="width: 25%;" [routerLink]="['petsByTags']" role="button" disabled>By Tags</a>
+  <a name="search-by-sts" id="search-by-sts" class="btn btn-success" style="width: 25%;" [routerLink]="['petsByStatus']" role="button" disabled>By Status</a>
+</div>
+<div>
+  <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,19 @@
+<div>
+  <div *ngFor="let petRow of petGrid; let i = index;" class="row">
+    <div *ngFor="let pet of petRow" class="col-sm-3">
+      <div *ngIf="pet">
+        <figure>
+          <div *ngIf="pet.photoUrls.length>0; else elseBlock">
+            <img [src]="pet.photoUrls[0].url" style="width: 133px; height: 117px; margin-right:10px;" class="img-fluid" alt="">
+          </div>
+          <ng-template #elseBlock>
+            <img src="assets/BrokenImage.jpg" style="width: 133px; height: 117px; margin-right:10px;" class="img-fluid"  alt="">
+          </ng-template>
+          <a [routerLink]="['/searchPets/petById',pet.id]">
+            <figcaption>{{pet.name}}</figcaption>
+          </a>
+        </figure>
+      </div>
+    </div>
+  </div>
+</div>
