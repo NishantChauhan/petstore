@@ -1,9 +1,9 @@
-import { PetService } from './../../pet.service';
+import { Location } from '@angular/common';
+import { PetService } from '../../pet.service';
 import { Mode } from '../../mode';
 import { Pet } from '../../pet';
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '../../../../node_modules/@angular/router';
-import {Location} from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-pet-display-form',
@@ -11,22 +11,51 @@ import {Location} from '@angular/common';
   styleUrls: ['./pet-display-form.component.css']
 })
 export class PetDisplayFormComponent implements OnInit {
-  @Input() selectedPet: Pet; // @ Input to ge tthis property from parent component
+  @Input() id: number; // @ Input to get this property from parent component
   @Input() mode: Mode;
-
-  constructor(
-    private route: ActivatedRoute,
-    private petService: PetService,
-    private location: Location
-  ) { }
+  selectedPet: Pet;
+  url: string;
+  constructor(private route: ActivatedRoute,  private router: Router, private petService: PetService, private location: Location) {}
 
   ngOnInit() {
     this.getPet();
   }
 
   getPet() {
-    const id = +this.route.snapshot.paramMap.get('id'); // to get the parameter from the route
-    this.petService.getPet(id).subscribe(pet => this.selectedPet = pet);
+    if (!this.id) {
+      this.id = +this.route.snapshot.paramMap.get('id'); // to get the parameter from the route
+    }
+    this.petService.getPet(this.id).subscribe(pet => {
+      this.selectedPet = pet;
+      if (this.selectedPet && this.selectedPet.photoUrls[0]) {
+        this.url = this.selectedPet.photoUrls[0].url;
+      } else {
+        this.url = 'assets/BrokenImage.jpg';
+      }
+    });
   }
 
+ editPet() {
+   this.router.navigate(['editPetById', this.selectedPet.id]);
+ }
+
+  deletePet() {
+    if (
+      confirm(
+        'Are you sure to delete ' +
+          this.selectedPet.name +
+          '[ id = ' +
+          this.selectedPet.id +
+          ']' +
+          '?'
+      )
+    ) {
+      this.petService.deletePet(this.selectedPet.id).subscribe(
+        message => {
+          alert(message);
+          this.location.back();
+        }
+      );
+    }
+  }
 }

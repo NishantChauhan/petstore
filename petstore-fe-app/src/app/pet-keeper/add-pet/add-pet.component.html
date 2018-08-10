@@ -1,51 +1,99 @@
 <div>
-  <form>
+  <div [hidden]="!submitted" class="alert alert-success text-center" role="alert">
+    <strong>Add Pet</strong>
+    <br/>
+    <small>Here is how your Pet looks like in our database</small>
+  </div>
 
-    <div class="form-group">
+  <form #petForm="ngForm" (ngSubmit)="addPet()">
+    <div [hidden]="submitted">
+      <div class="alert alert-success text-center" role="alert">
+        <strong>Add Pet</strong>
+      </div>
+      <!--
+      <div class="alert alert-danger" role="alert">
+        <strong>{{diagnostic()}}</strong>
+      </div>
+ -->
+      <div [hidden]="petAdded">
+        <div class="form-group">
+          <label for="pet-name">Name</label>
+          <input id="pet-name" type="text" class="form-control" aria-describedby="name-helpId" placeholder="" [(ngModel)]="pet.name"
+            name="pet-name" #petName="ngModel" required minlength="3" maxlength="40" appAlphabetText="[^A-Z]">
+          <small id="name-helpId" class="form-text text-muted">Pet's Name e.g. Tommy</small>
+          <div *ngIf="petName.invalid && (petName.dirty || petName.touched)" class="alert alert-danger">
+            <div *ngIf="petName.errors['required']">
+              Pet Name is required. It cannot be empty.
+            </div>
+            <div *ngIf="petName.errors['minlength']">
+              Pet Name must have at least 3 characters.
+            </div>
+            <div *ngIf="petName.errors['appAlphabetText']">
+              Pet Name can contain english alphabets only
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select [(ngModel)]="pet.category" class="form-control" aria-describedby="category-helpId" name="pet-category" id="category"
+            required>
+            <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
+          </select>
+          <small id="category-helpId" class="form-text text-muted">Pet's Category e.g. bull-dog</small>
+        </div>
 
-      <label for="">Name</label>
-      <input type="text" class="form-control" aria-describedby="name-helpId" placeholder="" [(ngModel)]="pet.name" name="pet-name">
-      <small id="name-helpId" class="form-text text-muted">Pet's Name e.g. Tommy</small>
-    </div>
-    <div class="form-group">
-      <label for="category">Category</label>
-      <select [(ngModel)]="pet.category" class="form-control" aria-describedby="category-helpId" name="pet-category" id="category"
-        required>
-        <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
-      </select>
-      <small id="category-helpId" class="form-text text-muted">Pet's Category e.g. bull-dog</small>
-    </div>
-    <div class="form-group">
-      <label for="status">Status</label>
-      <select [(ngModel)]="pet.status" class="form-control" aria-describedby="status-helpId" name="pet-status" id="status" required>
-        <option *ngFor="let status of statuses" [ngValue]="status">{{status}}</option>
-      </select>
-      <small id="status-helpId" class="form-text text-muted">Pet's Status e.g. 'AVAILABLE','PENDING','SOLD'</small>
-    </div>
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select [(ngModel)]="pet.status" class="form-control" aria-describedby="status-helpId" name="pet-status" id="status" required>
+            <option *ngFor="let status of statuses" [ngValue]="status">{{status}}</option>
+          </select>
+          <small id="status-helpId" class="form-text text-muted">Pet's Status e.g. 'AVAILABLE','PENDING','SOLD'</small>
+        </div>
 
-    <div class="form-group">
-      <label>Tags</label>
-      <div>
-        <label class="form-check-label" aria-describedby="tags-helpId" *ngFor="let tag of tags;  let i = index">
-          <input type="checkbox" class="form-check-input" [(ngModel)]="tagsChecked[i]" name="tag[i]">
-          <span style="margin: 20px;">{{tags[i].name}}</span>
+        <div class="form-group">
+          <label>Tags</label>
+          <div>
+            <label class="form-check-label" aria-describedby="tags-helpId" *ngFor="let tag of tags;  let i = index">
+              <input type="checkbox" class="form-check-input" [(ngModel)]="tagsChecked[i]" name="tag[i]" (change)="tagsChanged()">
+              <span style="margin: 20px;">{{tags[i].name}}</span>
+            </label>
+          </div>
+          <div>
+            <small id="tags-helpId" class="form-text text-muted">Pet's Tags e.g. 'cartoon'</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" [disabled]="!petForm.form.valid || petAdded" class="btn btn-success">Add Pet</button>
+        </div>
+      </div>
+      <div [hidden]="!petAdded" class="form-group">
+        <div class="alert alert-success text-center" role="alert">
+          <strong> {{pet.name}} [id:{{pet.id}}] was added to our database
+            <br/> Please Click on the Browse button below to to upload the Pet's photo and finish up the process.</strong>
+        </div>
+        <label class="btn btn-success btn-file" style="margin-left: 1em;">
+          Browse
+          <input type="file" style="display: none;" #fileInput (change)="uploadPhoto(fileInput.files); fileInput.disabled = true">
         </label>
-      </div>
-      <div>
-        <small id="tags-helpId" class="form-text text-muted">Pet's Tags e.g. 'cartoon'</small>
+        <div>
+          <small id="image-helpId" class="form-text text-muted">Pet's Image</small>
+        </div>
       </div>
     </div>
 
-    <div class="form-group">
-      <button type="submit" class="btn btn-success" (click)="addPet()">Add Pet</button>
+
+    <div *ngIf="submitted">
+      <div class="row">
+        <div>
+          <app-pet-display-form [id]="pet.id" mode="mode"></app-pet-display-form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <button class="btn btn-success btn-block" style="margin: 10px;" (click)="reset(); petForm.reset()">Add More Pets</button>
+        </div>
+      </div>
     </div>
   </form>
 </div>
-
-
-<!-- <div class="form-check">
-  <label class="form-check-label" style="margin: 20px" *ngFor="let tag of tags; let i = index">
-      <input type="checkbox" class="form-check-input" [(ngModel)]="tagsChecked[i]" name="tag[i]">
-      {{tags[i].name}}
-    </label>
-</div> -->

@@ -1,7 +1,5 @@
 package com.petstore;
 
-import java.io.IOException;
-
 import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
@@ -10,12 +8,7 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.Resource;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.resource.PathResourceResolver;
 
 /**
  * @author Nishant

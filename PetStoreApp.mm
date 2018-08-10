@@ -52,11 +52,17 @@
 <node CREATED="1532688572858" ID="ID_7889091" MODIFIED="1532688574737" POSITION="right" TEXT="Maven">
 <node CREATED="1532688584687" ID="ID_1673353129" MODIFIED="1532688592145" TEXT="Create goals for angular build"/>
 </node>
-<node CREATED="1532091293461" ID="ID_812331146" MODIFIED="1532688577389" POSITION="left" TEXT="Issues">
+<node CREATED="1532091293461" FOLDED="true" ID="ID_812331146" MODIFIED="1532979393137" POSITION="left" TEXT="Issues">
 <node CREATED="1532090965386" ID="ID_389908765" MODIFIED="1532090977969" TEXT="Unable to start server due to error - Could not obtain transaction-synchronized Session for current thread">
 <node CREATED="1532091212343" ID="ID_1203480385" MODIFIED="1532091286289" TEXT="Solved by removing =  (exclude = HibernateJpaAutoConfiguration.class) from SpringBootApplicationAnnotation"/>
 <node CREATED="1532091306637" ID="ID_1909110364" MODIFIED="1532091319991" TEXT="Happened when first integrated with Hibernate"/>
 </node>
+</node>
+<node CREATED="1532979395825" ID="ID_1729748720" MODIFIED="1532979397712" POSITION="left" TEXT="Pending">
+<node CREATED="1532979398650" ID="ID_1573631573" MODIFIED="1532979496667" TEXT="Submit should refresh the page"/>
+<node CREATED="1532979497652" ID="ID_25729855" MODIFIED="1532979506010" TEXT="Bootstrap styling"/>
+<node CREATED="1533566624519" ID="ID_647192957" MODIFIED="1533566629272" TEXT="Pagination"/>
+<node CREATED="1533566696102" ID="ID_852703467" MODIFIED="1533566700832" TEXT="Caching DB responses"/>
 </node>
 </node>
 </map>

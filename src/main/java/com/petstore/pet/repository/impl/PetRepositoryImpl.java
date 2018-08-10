@@ -3,7 +3,9 @@ package com.petstore.pet.repository.impl;
 import java.net.URI;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.TypedQuery;
 
@@ -259,20 +261,24 @@ public class PetRepositoryImpl implements PetRepository {
 		}
 		
 		if(image ==null) {
-			throw new Exception ("Image Not Present int the request");
+			throw new Exception ("Image Not Present in the request");
 		}
 		
 		String imageName=StringUtils.cleanPath(image.getOriginalFilename());
-		String urlPath = storageService.preparePhotoURLPath(fetchedPet.getCategory().getName(),fetchedPet.getName(),fetchedPet.getId());
+		String storagePath = storageService.preparePhotoURLPath(true,fetchedPet.getId());
+		String persistPath = storageService.preparePhotoURLPath(false,fetchedPet.getId());
 		PhotoURL photoURL = new PhotoURL();
-		photoURL.setUrl(urlPath+imageName);
+		photoURL.setUrl(persistPath+imageName);
 		
-		storageService.init(Paths.get(new URI(urlPath)));
-		storageService.store(image,Paths.get(new URI(urlPath)));
+		storageService.init(Paths.get(new URI(storagePath)));
+		storageService.store(image,Paths.get(new URI(storagePath)));
 
 		
 		List<PhotoURL> photoUrlList= fetchedPet.getPhotoUrls();
-		photoUrlList.add(photoURL);
+		photoUrlList.add(0,photoURL);
+		Set<String> photoUrlSet = new HashSet<>();
+		photoUrlList.removeIf(p -> !photoUrlSet.add(p.getUrl()));
+
 		fetchedPet.setPhotoUrls(photoUrlList);
 
 		try  {
@@ -280,7 +286,7 @@ public class PetRepositoryImpl implements PetRepository {
 			Transaction tx = session.beginTransaction();
 			session.update(fetchedPet);
 			tx.commit();
-			logger.info("Uploaded image "+urlPath+imageName+" for pet with id: " + fetchedPet.getId());
+			logger.info("Uploaded image "+storagePath+imageName+" for pet with id: " + fetchedPet.getId());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -319,6 +325,20 @@ public class PetRepositoryImpl implements PetRepository {
 
 		LoggerUtil.exit(logger);
 		return tags;
+	}
+	
+	public List<Pet> fetchAllPets() throws Exception {
+		LoggerUtil.entry(logger);
+		Session session = this.sessionFactory.getCurrentSession();
+
+		@SuppressWarnings("unchecked")
+		TypedQuery<Pet> query = session.getNamedQuery("fetchAllPets");
+		List<Pet> tags = query.getResultList();
+		
+
+		LoggerUtil.exit(logger);
+		return tags;
+		
 	}
 
 	/*

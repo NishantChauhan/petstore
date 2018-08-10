@@ -1,7 +1,10 @@
 <div class="container">
   <div class="row">
-    <div class="jumbotron text-center">
-      <h1>Tom and Jerry Pet Store</h1>
+    <div class="btn-group" style="margin-top: 10px; margin-bottom: 10px; width: 100%;">
+      <a name="home" id="" class="btn btn-primary" style="width: 25%;" [routerLink]="['home']" role="button">Home</a>
+      <a name="list-pets" id="" class="btn btn-success" style="width: 25%;" [routerLink]="['listPets']" role="button">Our Pets</a>
+      <a name="search-pet" id="" class="btn btn-info" style="width: 25%;" [routerLink]="['searchPets']" role="button">Search Pets</a>
+      <a name="add-pet" id="" class="btn btn-danger" style="width: 25%;" [routerLink]="['addPets']" role="button">Add Pets</a>
     </div>
   </div>
   <div class="row">

@@ -13,7 +13,7 @@ public interface StorageService {
     
 	Resource loadFileAsResource(String filename) throws Exception;
 
-	String preparePhotoURLPath(String category, String name, Long id);
+	String preparePhotoURLPath(boolean load,Long id);
     
     /*
     Stream<Path> loadAll();

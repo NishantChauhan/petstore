@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PetSearchPanelComponent } from './pet-search-panel.component';
+import { EditPetComponent } from './edit-pet.component';
 
-describe('PetSearchPanelComponent', () => {
-  let component: PetSearchPanelComponent;
-  let fixture: ComponentFixture<PetSearchPanelComponent>;
+describe('EditPetComponent', () => {
+  let component: EditPetComponent;
+  let fixture: ComponentFixture<EditPetComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PetSearchPanelComponent ]
+      declarations: [ EditPetComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PetSearchPanelComponent);
+    fixture = TestBed.createComponent(EditPetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

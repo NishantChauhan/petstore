@@ -23,20 +23,20 @@ insert into tag values (10,'demo-tag');
 
 -- Tom
 insert into pet values (1,'Tom','AVAILABLE',1);
-insert into photo_urls values ('photoURL/pussy-cat/Tom-id-1/Tom.png',1);
+insert into photo_urls values ('photoURL/1/Tom.png',1);
 insert into	mtm_pet_tag values (1,1);
 insert into	mtm_pet_tag values (2,1);
 insert into	mtm_pet_tag values (3,1);
 
 -- Jerry
 insert into pet values (2,'Jerry','AVAILABLE',2);
-insert into photo_urls values ('photoURL/house-mouse/Jerry-id-2/Jerry.png',2);
+insert into photo_urls values ('photoURL/2/Jerry.png',2);
 insert into	mtm_pet_tag values (1,2);
 insert into	mtm_pet_tag values (4,2);
 
 -- Spike
 insert into pet values (3,'Spike','AVAILABLE',3);
-insert into photo_urls values ('photoURL/bulldog/Spike-id-3/Spike.png',3);
+insert into photo_urls values ('photoURL/3/Spike.png',3);
 insert into	mtm_pet_tag values (1,3);
 
 commit;

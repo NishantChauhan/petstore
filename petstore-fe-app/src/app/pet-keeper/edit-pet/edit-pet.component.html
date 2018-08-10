@@ -1,0 +1,63 @@
+<div class="alert alert-success text-center" role="alert">
+  <strong>Edit Pet</strong>
+</div>
+<form>
+  <div *ngIf="editablePet; else elseBlock">
+    <div style="text-align: left; margin: 10px;">
+      <div class="row">
+        <img [src]="url" style="width: 266px; height: 235px;" class="img-fluid" alt="">
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label class="btn btn-success btn-file" style="width: 266px;">
+            Upload Instantly
+            <input type="file" style="display: none;" #fileInput (change)="uploadPhoto(fileInput.files)">
+          </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label for="pet-name">Name</label>
+          <input id="pet-name" type="text" class="form-control" aria-describedby="name-helpId" placeholder="" [(ngModel)]="editablePet.name"
+            name="pet-name" #petName="ngModel" required minlength="3" maxlength="40" appAlphabetText="[^A-Z]">
+          <small id="name-helpId" class="form-text text-muted">Pet's Name e.g. Tommy</small>
+          <div *ngIf="petName.invalid && (petName.dirty || petName.touched)" class="alert alert-danger">
+            <div *ngIf="petName.errors['required']">
+              Pet Name is required. It cannot be empty.
+            </div>
+            <div *ngIf="petName.errors['minlength']">
+              Pet Name must have at least 3 characters.
+            </div>
+            <div *ngIf="petName.errors['appAlphabetText']">
+              Pet Name can contain english alphabets only
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select [(ngModel)]="editablePet.status" class="form-control" aria-describedby="status-helpId" name="pet-status" id="status"
+            required>
+            <option *ngFor="let status of statuses" [ngValue]="status">{{status}}</option>
+          </select>
+          <small id="status-helpId" class="form-text text-muted">Pet's Status e.g. 'AVAILABLE','PENDING','SOLD'</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #elseBlock>
+    <div class="col-sm-6">
+      <figure>
+        <img src="assets/BrokenImage.jpg" class="square" style="width: 266px; height: 235px;" alt="">
+        <figcaption style="color: red; font-size: 150%;">No such pet exists !!!</figcaption>
+      </figure>
+    </div>
+  </ng-template>
+  <div class="row" style="margin-top: 10px;">
+    <div class="btn-group" style="width: 100%;">
+      <button type="button" class="btn btn-success" style="width: 50%" (click)="updatePet()">Update</button>
+      <button type="button" class="btn btn-danger" style="width: 50%" (click)="cancel()">Cancel</button>
+    </div>
+  </div>
+</form>

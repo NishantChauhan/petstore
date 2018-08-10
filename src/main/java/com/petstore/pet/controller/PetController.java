@@ -33,17 +33,17 @@ public class PetController {
 	@Autowired
 	StorageService fileStoreService;
 
-	/** Regex Mappingto support Angular Mapping withing Tomcat */
+	/** Regex Mapping to support Angular Mapping within Tomcat */
 	@GetMapping(value = "/**/{[path:[^\\.]*}")
 	public ModelAndView forward() {
 		return new ModelAndView("/index.html");
 	}
 
-	@RequestMapping(path = "/photoURL/{category}/{name}-id-{id}/{imageName}", method = { RequestMethod.GET })
-	public ResponseEntity<Resource> loadImage(@PathVariable String category, @PathVariable String name,
+	@RequestMapping(path = "/photoURL/{id}/{imageName}", method = { RequestMethod.GET })
+	public ResponseEntity<Resource> loadImage(
 			@PathVariable String id, @PathVariable String imageName) throws Exception {
 
-		String imageFilePath = fileStoreService.preparePhotoURLPath(category, name, Long.valueOf(id));
+		String imageFilePath = fileStoreService.preparePhotoURLPath(true,Long.valueOf(id));
 		HttpHeaders responseHeaders = new HttpHeaders();
 		Resource imageFile = fileStoreService.loadFileAsResource(imageFilePath + imageName);
 		responseHeaders.setContentType(MediaType.IMAGE_PNG);
@@ -105,7 +105,7 @@ public class PetController {
 		return petRepository.findPetById(Long.valueOf(petId));
 	}
 
-	@RequestMapping(path = "/pet/{petId}", method = { RequestMethod.DELETE }, produces = { "application/json" })
+	@RequestMapping(path = "/pet/{petId}", method = { RequestMethod.DELETE }, produces = { MediaType.TEXT_PLAIN_VALUE })
 	String deletePet(@PathVariable String petId) throws Exception {
 		return petRepository.deletePet(Long.valueOf(petId)) ? "Pet Deleted Successfully" : "Failure while deleting pet";
 	}
@@ -113,7 +113,7 @@ public class PetController {
 	// Upload Image
 
 	@RequestMapping(path = "/pet/{petId}/uploadImage", method = { RequestMethod.POST }, produces = {
-			"application/json" }, consumes = { "multipart/form-data" })
+			"application/json"}, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
 	Pet uploadPetImage(@PathVariable String petId, @RequestBody MultipartFile image) throws Exception {
 
 		petRepository.uploadImage(Long.valueOf(petId), image);
@@ -131,6 +131,18 @@ public class PetController {
 	List<Tag> fetchAllTags() throws Exception {
 
 		return petRepository.fetchAllTags();
+	}
+
+	/**
+	 * @author Nishant
+	 * @param None
+	 * @return List of Pets
+	 *  
+	 * */
+	@RequestMapping(path = "/fetchAllPets", method = { RequestMethod.GET }, produces = { "application/json" })
+	List<Pet> fetchAllPets() throws Exception {
+
+		return petRepository.fetchAllPets();
 	}
 
 }

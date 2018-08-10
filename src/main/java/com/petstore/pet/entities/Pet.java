@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.annotation.Generated;
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -30,7 +29,9 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "pet", schema = "petstoredb", uniqueConstraints = { @UniqueConstraint(columnNames = "pet_id") })
-@NamedQueries(value = { @NamedQuery(name = "findPetById", query = "select p from Pet p where p.id=:pet_id"),
+@NamedQueries(value = { 
+		@NamedQuery(name="fetchAllPets", query="select p from Pet p"),
+		@NamedQuery(name = "findPetById", query = "select p from Pet p where p.id=:pet_id"),
 		@NamedQuery(name = "findPetsByStatus", query = "select p from Pet p where p.status=:status"),
 		@NamedQuery(name = "findPetsByName", query = "select p from Pet p where p.name=:name"),
 		@NamedQuery(name = "findPetsByCategory", query = "select p from Pet p JOIN p.category c where c.name =:category"),

@@ -126,10 +126,12 @@ public class FileSystemStorageService implements StorageService {
     }
     
     @Override
-	public String preparePhotoURLPath(String category, String name, Long id) {
+	public String preparePhotoURLPath(boolean load, Long id) {
 		StringBuilder strBld = new StringBuilder(4000);
-		strBld.append(imageRootLocation).append("photoURL/").append(category).append("/").append(name).append("-id-")
-				.append(String.valueOf(id)).append("/");
+		if(load) {
+			strBld.append(imageRootLocation);
+		}
+		strBld.append("photoURL/").append(String.valueOf(id)).append("/");
 		return strBld.toString();
 	}
 }

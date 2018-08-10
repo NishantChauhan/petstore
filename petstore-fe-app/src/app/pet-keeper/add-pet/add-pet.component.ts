@@ -1,7 +1,9 @@
-import { PetService } from './../../pet.service';
-import { Category, Tag, PhotoURL } from './../../pet';
+import { Mode } from '../../mode';
+import { PetService } from '../../pet.service';
+import { Category, Tag } from '../../pet';
 import { Component, OnInit } from '@angular/core';
 import { Pet } from '../../pet';
+
 
 @Component({
   selector: 'app-add-pet',
@@ -11,14 +13,19 @@ import { Pet } from '../../pet';
 export class AddPetComponent implements OnInit {
   pet = new Pet();
   categories: Category[];
+  mode = Mode.READ_ONLY;
+  petAdded = false;
   tags: Tag[];
+  photos: FileList;
+  imageUrl: string;
   tagsChecked: boolean[];
   statuses = ['AVAILABLE', 'PENDING', 'SOLD'];
+  submitted = false;
 
   constructor(private petService: PetService) {
     this.petService.getTags().subscribe(tags => {
       this.tags = tags;
-      this.tagsChecked = new Array() ;
+      this.tagsChecked = new Array();
       if (this.tags) {
         for (let i = 0; i < this.tags.length; i++) {
           if (this.tags) {
@@ -35,8 +42,16 @@ export class AddPetComponent implements OnInit {
       .getCategories()
       .subscribe(categories => (this.categories = categories));
   }
+/*
+  public diagnostic(): string {
+    return JSON.stringify(this.pet);
+  }
+*/
+  public reset() {
+    location.reload();
+  }
 
-  public addPet() {
+  public tagsChanged() {
     if (this.tagsChecked) {
       this.pet.tags = new Array<Tag>();
       for (let i = 0; i < this.tagsChecked.length; i++) {
@@ -45,9 +60,30 @@ export class AddPetComponent implements OnInit {
         }
       }
     }
-    this.pet.photoUrls = new Array<PhotoURL>();
-    this.pet.photoUrls.push( new PhotoURL('photoURL/bulldog/Spike-id-3/Spike.png'));
+  }
 
-    this.petService.addPet(this.pet).subscribe();
+
+  public uploadPhoto(files: FileList) {
+    this.photos = files;
+    // console.log(files);
+    if (this.photos && this.photos.length > 0) {
+      for (let i = 0; i < this.photos.length; i++) {
+        const formData = new FormData();
+        formData.append('image', this.photos[i]);
+        this.petService
+          .uploadPhoto(this.pet.id, formData)
+          .subscribe(uploadedPet => {
+            this.pet = uploadedPet;
+            // console.log(uploadedPet);
+            this.submitted = true;
+          });
+      }
+    }
+  }
+  public addPet() {
+    this.petService.addPet(this.pet).subscribe(addedPet => {
+      this.pet = addedPet;
+      this.petAdded = true;
+    });
   }
 }

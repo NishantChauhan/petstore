@@ -12,24 +12,17 @@ export class PetSearchByIdComponent {
   petId: number;
   selectedPet: Pet;
   submitted = false;
-  mode = Mode.READ_ONLY;
+  mode = Mode.EDIT;
 
   constructor(private petService: PetService) {}
 
 
   onSubmit() {
-    this.submitted = true;
-    this.petService.getPet(this.petId).subscribe(pet => {
+      this.submitted = true;
+  }
 
-      // To test integration of Angular and SpringBoot
-      // if (pet) {
-      //   pet.photoUrls.forEach(photoUrl => {
-      //     photoUrl.url = 'http://localhost:8080/' + photoUrl.url;
-      //   });
-      // }
-      console.log(pet);
-      this.selectedPet = pet;
-    });
+  onKeyUp() {
+    this.submitted = false;
   }
 
   // TODO: Remove this when we're done

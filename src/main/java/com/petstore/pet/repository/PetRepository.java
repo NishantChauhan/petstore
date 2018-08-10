@@ -33,7 +33,9 @@ public interface PetRepository {
 	public boolean uploadImage(Long petId, MultipartFile image) throws Exception;
 
 	public List<Category> fetchAllCategories() throws Exception;
-	
+
 	public List<Tag> fetchAllTags() throws Exception;
+
+	public List<Pet> fetchAllPets() throws Exception;
 
 }
