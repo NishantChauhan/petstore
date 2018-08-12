@@ -1,3 +1,4 @@
+import { CacheInterceptorService } from './cache-interceptor.service';
 import { EditPetComponent } from './pet-keeper/edit-pet/edit-pet.component';
 import { PetListComponent } from './pet-search/pet-list/pet-list.component';
 import { PetDisplayFormComponent } from './pet-search/pet-display-form/pet-display-form.component';
@@ -6,7 +7,7 @@ import { PetSearchComponent } from './pet-search/pet-search.component';
 import { PetSearchModule } from './pet-search/pet-search.module';
 import { BrowserModule, enableDebugTools } from '@angular/platform-browser';
 import { NgModule, Component } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -15,6 +16,7 @@ import { PetKeeperModule } from './pet-keeper/pet-keeper.module';
 import { AddPetComponent } from './pet-keeper/add-pet/add-pet.component';
 import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { PetHomeComponent } from './pet-home/pet-home.component';
+
 
 // Define Routes in your application
 // The router uses a first-match wins strategy when matching routes
@@ -75,7 +77,7 @@ const appRoutes: Routes = [
     PetKeeperModule,
     RouterModule.forRoot(appRoutes, { enableTracing: false })
   ],
-  providers: [],
+  providers: [    { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

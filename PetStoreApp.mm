@@ -1,7 +1,7 @@
 <map version="1.0.1">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
 <node CREATED="1531918901879" ID="ID_227311131" MODIFIED="1531918940609" TEXT="PetStore">
-<node CREATED="1531918941956" FOLDED="true" ID="ID_271857143" MODIFIED="1532261852989" POSITION="right" TEXT="REST">
+<node CREATED="1531918941956" ID="ID_271857143" MODIFIED="1534075570939" POSITION="right" TEXT="REST">
 <node CREATED="1531918969741" ID="ID_1425938863" MODIFIED="1531918999678" TEXT="Use @PathVariable in the method to read {petId}"/>
 <node CREATED="1531919017529" ID="ID_1959370219" MODIFIED="1531919050160" TEXT="@Repository should be on PetDaoImpl instead of PetDao"/>
 <node CREATED="1532208778790" ID="ID_1680276130" MODIFIED="1532208784487" TEXT="How to post files"/>
@@ -52,7 +52,7 @@
 <node CREATED="1532688572858" ID="ID_7889091" MODIFIED="1532688574737" POSITION="right" TEXT="Maven">
 <node CREATED="1532688584687" ID="ID_1673353129" MODIFIED="1532688592145" TEXT="Create goals for angular build"/>
 </node>
-<node CREATED="1532091293461" FOLDED="true" ID="ID_812331146" MODIFIED="1532979393137" POSITION="left" TEXT="Issues">
+<node CREATED="1532091293461" ID="ID_812331146" MODIFIED="1534075592441" POSITION="left" TEXT="Issues">
 <node CREATED="1532090965386" ID="ID_389908765" MODIFIED="1532090977969" TEXT="Unable to start server due to error - Could not obtain transaction-synchronized Session for current thread">
 <node CREATED="1532091212343" ID="ID_1203480385" MODIFIED="1532091286289" TEXT="Solved by removing =  (exclude = HibernateJpaAutoConfiguration.class) from SpringBootApplicationAnnotation"/>
 <node CREATED="1532091306637" ID="ID_1909110364" MODIFIED="1532091319991" TEXT="Happened when first integrated with Hibernate"/>

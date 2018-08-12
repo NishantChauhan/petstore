@@ -33,7 +33,10 @@ public class PetController {
 	@Autowired
 	StorageService fileStoreService;
 
-	/** Regex Mapping to support Angular Mapping within Tomcat */
+	/** 
+	 * Regex Mapping to support Angular Mapping within Tomcat 
+	 * 
+	 * */
 	@GetMapping(value = "/**/{[path:[^\\.]*}")
 	public ModelAndView forward() {
 		return new ModelAndView("/index.html");
@@ -50,8 +53,11 @@ public class PetController {
 		responseHeaders.setContentLength(imageFile.contentLength());
 		return new ResponseEntity<Resource>(imageFile, responseHeaders, HttpStatus.CREATED);
 	}
-	// Find Pets
 
+	/**
+	 * URL mapping for fetching pet based on Pet Id
+	 * 
+	 * */
 	@RequestMapping(path = "/pet/{petId}", method = { RequestMethod.GET }, produces = { "application/json" })
 	Pet fetchPet(@PathVariable String petId) throws NumberFormatException, Exception {
 		if (petId == null) {

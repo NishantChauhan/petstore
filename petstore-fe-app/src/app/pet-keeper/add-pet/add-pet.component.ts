@@ -8,7 +8,8 @@ import { Pet } from '../../pet';
 @Component({
   selector: 'app-add-pet',
   templateUrl: './add-pet.component.html',
-  styleUrls: ['./add-pet.component.css']
+  styleUrls: ['./add-pet.component.css'],
+  providers: [PetService]
 })
 export class AddPetComponent implements OnInit {
   pet = new Pet();
