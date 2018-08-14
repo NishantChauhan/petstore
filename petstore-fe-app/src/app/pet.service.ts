@@ -41,12 +41,12 @@ export class PetService {
   deletePet(id: number): Observable<string> {
     const url = `${this.petStoreUrl}/pet/${id}`;
     return this.http.delete(url, {responseType: 'text'} ).pipe(
-      tap(
-        response => {
-          console.log(response);
-        }
-      ),
-      // map(
+      // tap(
+      //   response => {
+      //     // console.log(response);
+      //   }
+      // ),
+      // // map(
       //   response => {
       //     console.log(response);
       //     return response;

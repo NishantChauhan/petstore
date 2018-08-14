@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { PetService } from '../../pet.service';
 import { Mode } from '../../mode';
 import { Pet } from '../../pet';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -15,6 +15,7 @@ export class PetDisplayFormComponent implements OnInit {
   @Input() mode: Mode;
   selectedPet: Pet;
   url: string;
+  @Output() deleteRequest = new EventEmitter<Pet>();
   constructor(private route: ActivatedRoute,  private router: Router, private petService: PetService, private location: Location) {}
 
   ngOnInit() {
@@ -50,12 +51,8 @@ export class PetDisplayFormComponent implements OnInit {
           '?'
       )
     ) {
-      this.petService.deletePet(this.selectedPet.id).subscribe(
-        message => {
-          alert(message);
-          this.location.back();
-        }
-      );
+      this.deleteRequest.emit(this.selectedPet);
+      this.router.navigate(['searchPets']);
     }
   }
 }

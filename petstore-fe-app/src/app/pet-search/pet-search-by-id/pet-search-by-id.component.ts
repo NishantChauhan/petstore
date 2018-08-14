@@ -25,9 +25,11 @@ export class PetSearchByIdComponent {
     this.submitted = false;
   }
 
-  // TODO: Remove this when we're done
-
-  get diagnostic() {
-    return JSON.stringify(this.selectedPet);
+  deleteSelectedPet(emittedPet: Pet)   {
+      this.petService.deletePet(emittedPet.id).subscribe(
+        message => {
+          alert(message);
+        }
+      );
   }
 }

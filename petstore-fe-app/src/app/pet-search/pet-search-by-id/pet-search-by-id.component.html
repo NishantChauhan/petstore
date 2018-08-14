@@ -7,5 +7,5 @@
   </div>
 </form>
 <div *ngIf="submitted">
-  <app-pet-display-form [id]="petId" [mode]="mode"></app-pet-display-form>
+  <app-pet-display-form [id]="petId" [mode]="mode" (deleteRequest)="deleteSelectedPet($event)"></app-pet-display-form>
 </div>
