@@ -8,6 +8,7 @@ import { PetSearchModule } from './pet-search/pet-search.module';
 import { BrowserModule, enableDebugTools } from '@angular/platform-browser';
 import { NgModule, Component } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -16,6 +17,9 @@ import { PetKeeperModule } from './pet-keeper/pet-keeper.module';
 import { AddPetComponent } from './pet-keeper/add-pet/add-pet.component';
 import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { PetHomeComponent } from './pet-home/pet-home.component';
+import { PetBannerDirective } from './pet-banner.directive';
+import { PetBannerComponent } from './pet-banner/pet-banner.component';
+import { PetAdComponent } from './pet-ad/pet-ad.component';
 
 
 // Define Routes in your application
@@ -68,15 +72,20 @@ const appRoutes: Routes = [
     AppComponent,
     PageNotFoundComponent,
     MaintenanceComponent,
-    PetHomeComponent
+    PetHomeComponent,
+    PetBannerDirective,
+    PetBannerComponent,
+    PetAdComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     PetSearchModule,
     PetKeeperModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes, { enableTracing: false })
   ],
+  entryComponents: [PetAdComponent],
   providers: [    { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })

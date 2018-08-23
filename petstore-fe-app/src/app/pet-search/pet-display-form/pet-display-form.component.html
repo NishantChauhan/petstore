@@ -1,34 +1,34 @@
 <form>
   <div class="row">
-    <div *ngIf="selectedPet; else elseBlock">
+    <div *ngIf="displayedPet; else elseBlock">
       <div style="text-align: left; margin: 10px;">
         <img [src]="url" style="float: left; width: 266px; height: 235px; margin-right:10px;" class="img-fluid" alt="">
         <p>
-          <span class="badge" style="width: 60px; padding-right: 60px;">Name</span> {{selectedPet.name}}</p>
+          <span class="badge" style="width: 60px; padding-right: 60px;">Name</span> {{displayedPet.name}}</p>
         <p>
-          <span class="badge" style="width: 60px; padding-right: 60px;">Id</span> {{selectedPet.id}}</p>
+          <span class="badge" style="width: 60px; padding-right: 60px;">Id</span> {{displayedPet.id}}</p>
         <p>
-          <span class="badge" style="width: 60px; padding-right: 60px;">Status</span> {{selectedPet.status}}</p>
+          <span class="badge" style="width: 60px; padding-right: 60px;">Status</span> {{displayedPet.status}}</p>
         <p>
 
           <p>
-            <span class="badge" style="width: 60px; padding-right: 60px;">Category</span> {{selectedPet.category.name}}</p>
+            <span class="badge" style="width: 60px; padding-right: 60px;">Category</span> {{displayedPet.category.name}}</p>
           <p>
             <span class="badge" style="width: 60px; padding-right: 60px;">Tags</span>
-            <span *ngFor="let tag of selectedPet.tags"> {{tag.name}},</span> etc.</p>
+            <span *ngFor="let tag of displayedPet.tags"> {{tag.name}},</span> etc.</p>
       </div>
     </div>
     <ng-template #elseBlock>
-      <div class="col-sm-6">
+      <div class="col-sm-12" style="text-align: center; margin: 10px;">
         <figure>
-          <img src="assets/BrokenImage.jpg" class="square" style="width: 266px; height: 235px;" alt="">
-          <figcaption style="color: red; font-size: 150%;">No such pet exists !!!</figcaption>
+          <img src="assets/BrokenImage.jpg" class="square" style="float: center; width: 266px; height: 235px; margin-right:10px;" alt="">
+          <figcaption style="color: red; font-size: 100%;">Pet no. {{this.id}} does not exist</figcaption>
         </figure>
       </div>
     </ng-template>
   </div>
   <div class="row" style="margin-top: 10px;">
-    <div [hidden]="!(mode === 'EDIT') || !selectedPet">
+    <div [hidden]="!(mode === 'EDIT') || !displayedPet">
       <div class="btn-group" style="width: 100%;">
         <button type="button" class="btn btn-success" style="width: 50%" (click)="editPet()">Edit</button>
         <button type="button" class="btn btn-danger" style="width: 50%" (click)="deletePet()">Delete</button>

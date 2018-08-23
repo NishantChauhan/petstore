@@ -1,0 +1,11 @@
+<div *ngFor="let i of [1,2,3]">
+  <div [@compState]="live">
+    <div *ngIf="pet">
+      <figure>
+        <a [routerLink]="['/searchPets/petById',pet.id]">
+          <img [src]="pet.photoUrls[0].url" style="width: 173px; height: 157px;" class="img-square" alt="">
+        </a>
+      </figure>
+    </div>
+  </div>
+</div>

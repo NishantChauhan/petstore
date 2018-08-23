@@ -10,7 +10,6 @@ import { Component} from '@angular/core';
 })
 export class PetSearchByIdComponent {
   petId: number;
-  selectedPet: Pet;
   submitted = false;
   mode = Mode.EDIT;
 

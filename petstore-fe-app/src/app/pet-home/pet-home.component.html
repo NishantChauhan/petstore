@@ -1,3 +1,15 @@
-<div class="col-sm-12">
-    <img src="assets/HomePage.jpg"  style="width: 100%; height: ;">
+<div class="row">
+  <div class="col-sm-2">
+    <!-- <div *ngFor="let i of [1,2,3]" class="row"> -->
+      <app-pet-banner directon="left"></app-pet-banner>
+    <!-- </div> -->
   </div>
+  <div class="col-sm-8">
+    <img src="assets/HomePage.jpg" style="width: 100%;">
+  </div>
+  <div class="col-sm-2">
+    <!-- <div *ngFor="let i of [1,2,3]" class="row"> -->
+      <app-pet-banner directon="right"></app-pet-banner>
+    <!-- </div> -->
+  </div>
+</div>

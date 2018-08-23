@@ -11,47 +11,58 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./pet-display-form.component.css']
 })
 export class PetDisplayFormComponent implements OnInit {
-  @Input() id: number; // @ Input to get this property from parent component
-  @Input() mode: Mode;
-  selectedPet: Pet;
+  @Input()
+  id: number; // @ Input to get this property from parent component
+  @Input()
+  mode: Mode;
+  @Input()
+  displayedPet: Pet;
   url: string;
-  @Output() deleteRequest = new EventEmitter<Pet>();
-  constructor(private route: ActivatedRoute,  private router: Router, private petService: PetService, private location: Location) {}
+  @Output()
+  deleteRequest = new EventEmitter<Pet>();
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private petService: PetService,
+    private location: Location
+  ) {}
 
   ngOnInit() {
     this.getPet();
   }
 
   getPet() {
-    if (!this.id) {
-      this.id = +this.route.snapshot.paramMap.get('id'); // to get the parameter from the route
-    }
-    this.petService.getPet(this.id).subscribe(pet => {
-      this.selectedPet = pet;
-      if (this.selectedPet && this.selectedPet.photoUrls[0]) {
-        this.url = this.selectedPet.photoUrls[0].url;
-      } else {
-        this.url = 'assets/BrokenImage.jpg';
+    if (!this.displayedPet) {
+      if (!this.id) {
+        this.id = +this.route.snapshot.paramMap.get('id'); // to get the parameter from the route
       }
-    });
+      this.petService.getPet(this.id).subscribe(pet => {
+        this.displayedPet = pet;
+        if (this.displayedPet && this.displayedPet.photoUrls[0]) {
+          this.url = this.displayedPet.photoUrls[0].url;
+        } else {
+          this.url = 'assets/BrokenImage.jpg';
+        }
+      });
+    }
   }
 
- editPet() {
-   this.router.navigate(['editPetById', this.selectedPet.id]);
- }
+  editPet() {
+    this.router.navigate(['editPetById', this.displayedPet.id]);
+  }
 
   deletePet() {
     if (
       confirm(
         'Are you sure to delete ' +
-          this.selectedPet.name +
+          this.displayedPet.name +
           '[ id = ' +
-          this.selectedPet.id +
+          this.displayedPet.id +
           ']' +
           '?'
       )
     ) {
-      this.deleteRequest.emit(this.selectedPet);
+      this.deleteRequest.emit(this.displayedPet);
       this.router.navigate(['searchPets']);
     }
   }
