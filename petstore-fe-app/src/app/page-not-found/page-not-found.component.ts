@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PageNotFoundComponent implements OnInit {
 
+  errorString: string;
+
   constructor() { }
 
   ngOnInit() {
+    this.errorString = 'Invalid Location';
   }
 
 }

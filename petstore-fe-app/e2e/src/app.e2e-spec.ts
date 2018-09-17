@@ -1,14 +1,11 @@
-import { AppPage } from './app.po';
+'use strict'; // necessary for node!
 
-describe('workspace-project App', () => {
-  let page: AppPage;
+import { browser, element, by, protractor, ElementFinder, ElementArrayFinder } from 'protractor';
 
-  beforeEach(() => {
-    page = new AppPage();
-  });
+// THESE TESTS ARE INCOMPLETE
+describe('Pet Form Validation Tests', function () {
 
-  it('should display welcome message', () => {
-    page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to petstore-fe-app!');
+  beforeAll(function () {
+    browser.get('');
   });
 });
