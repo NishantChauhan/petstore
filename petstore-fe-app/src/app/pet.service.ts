@@ -1,7 +1,12 @@
 import { Pet, Category, Tag } from './pet';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpResponse, HttpParams } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpResponse,
+  HttpParams
+} from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 
 const httpOptionsJson = {
@@ -40,7 +45,7 @@ export class PetService {
 
   deletePet(id: number): Observable<string> {
     const url = `${this.petStoreUrl}/pet/${id}`;
-    return this.http.delete(url, {responseType: 'text'} ).pipe(
+    return this.http.delete(url, { responseType: 'text' }).pipe(
       // tap(
       //   response => {
       //     // console.log(response);
@@ -62,7 +67,6 @@ export class PetService {
     //   catchError(this.handleError<string>(`getPet id=${id}`))
     // );
   }
-
 
   getAllPets(): Observable<Pet[]> {
     const url = `${this.petStoreUrl}/fetchAllPets`;
@@ -93,17 +97,20 @@ export class PetService {
     );
   }
 
-  updatePetByNameStatus(id: number, pname: string, pstatus: string): Observable<Pet> {
+  updatePetByNameStatus(
+    id: number,
+    pname: string,
+    pstatus: string
+  ): Observable<Pet> {
     const url = `${this.petStoreUrl}/pet/${id}?name=${pname}&status=${pstatus}`;
     // console.log(url);
-    return this.http.post<Pet>(url, httpOptionsJson) .pipe(
-      tap( pet => {
+    return this.http.post<Pet>(url, httpOptionsJson).pipe(
+      tap(pet => {
         // console.log(pet);
       }),
       catchError(this.handleError<Pet>(` id=${id}`))
     );
   }
-
 
   uploadPhoto(petId: number, image: FormData): Observable<Pet> {
     const url = `${this.petStoreUrl}/pet/${petId}/uploadImage`;
@@ -154,10 +161,13 @@ export class PetService {
       console.error(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
-      // this.log(`${operation} failed: ${error.message}`);
+      this.log(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
+  }
+  private log(message: string) {
+    console.log(message);
   }
 }

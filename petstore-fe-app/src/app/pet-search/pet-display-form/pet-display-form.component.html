@@ -3,8 +3,8 @@
     <div *ngIf="displayedPet; else elseBlock">
       <div style="text-align: left; margin: 10px;">
         <img [src]="url" style="float: left; width: 266px; height: 235px; margin-right:10px;" class="img-fluid" alt="">
-        <p>
-          <span class="badge" style="width: 60px; padding-right: 60px;">Name</span> {{displayedPet.name}}</p>
+        <p id="petName">
+          <span class="badge"  style="width: 60px; padding-right: 60px;">Name</span> {{displayedPet.name}}</p>
         <p>
           <span class="badge" style="width: 60px; padding-right: 60px;">Id</span> {{displayedPet.id}}</p>
         <p>

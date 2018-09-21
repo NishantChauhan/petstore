@@ -1,7 +1,7 @@
 <form class="form-inline">
   <div class="form-group">
     <label for="petId">Enter Pet Id</label>
-    <input type="text" class="form-control" maxlength="2" style="width: 50px; margin: 1em;" id="petCategory" (keyup)="onKeyUp()" required [(ngModel)]="petId"
+    <input type="text" class="form-control" maxlength="2" style="width: 50px; margin: 1em;" id="petId" (keyup)="onKeyUp()" required [(ngModel)]="petId"
       name="petId">
     <button type="submit" style="margin: 1em;" class="btn btn-success" (click)="onSubmit()">Find Pet</button>
   </div>
