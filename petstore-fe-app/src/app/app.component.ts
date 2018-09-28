@@ -7,4 +7,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  authenticated = false;
+  loggedout: boolean;
+
+  constructor() {}
+
+  login(isLoggedIn: boolean) {
+    this.authenticated = isLoggedIn;
+  }
+  logout() {
+    this.loggedout = true;
+  }
 }

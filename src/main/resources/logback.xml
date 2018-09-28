@@ -8,11 +8,14 @@
     <!-- encoders are assigned the type
          ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
     <encoder>
-      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %caller{1} - %msg%n</pattern>
     </encoder>
   </appender>
 <logger name="com.petstore" level="DEBUG"/>
 <logger name="org.hibernate.SQL" level="DEBUG"/>
+<logger name="com.zaxxer.hikari" level="OFF"/>
+<logger name="org.springframework.security" level="DEBUG"/>
+
   <root level="ERROR">
     <appender-ref ref="STDOUT" />
   </root>

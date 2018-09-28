@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.petstore.pet.utilities.LoggerUtil;
 import com.petstore.pet.utilities.filestorage.StorageService;
 import com.petstore.pet.utilities.filestorage.exceptions.StorageException;
 
@@ -74,7 +73,7 @@ public class FileSystemStorageService implements StorageService {
 		
 		Resource imageResource=new ByteArrayResource(fileArray);
 		
-		LoggerUtil.exit(logger);
+		logger.debug("EXIT");
         return imageResource;
     }
     /*

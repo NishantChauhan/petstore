@@ -17,7 +17,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
  * 
  * */
 @Configuration
-@ComponentScan(basePackages= {"com.petstore.pet"})
+@ComponentScan(basePackages= {"com.petstore.pet","com.petstore.user"})
 public class ApplicationConfiguration
 {
 	
@@ -51,7 +51,7 @@ public class ApplicationConfiguration
 	@Bean(name = "sessionFactory")
 	public SessionFactory getSessionFactory(DataSource dataSource) {
 		LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
-		sessionBuilder.scanPackages("com.petstore.pet.entities");
+		sessionBuilder.scanPackages("com.petstore.pet.entities","com.petstore.user.entities");
 		return sessionBuilder.buildSessionFactory();
 	}
 }

@@ -1,13 +1,25 @@
 <div class="container">
-  <div class="row">
-    <div class="btn-group" style="margin-top: 10px; margin-bottom: 10px; width: 100%;">
-      <a name="home" id="" class="btn btn-primary" style="width: 25%;" [routerLink]="['home']" role="button">Home</a>
-      <a name="list-pets" id="" class="btn btn-success" style="width: 25%;" [routerLink]="['listPets']" role="button">Our Pets</a>
-      <a name="search-pet" id="" class="btn btn-info" style="width: 25%;" [routerLink]="['searchPets']" role="button">Search Pets</a>
-      <a name="add-pet" id="" class="btn btn-danger" style="width: 25%;" [routerLink]="['addPets']" role="button">Add Pets</a>
+  <div *ngIf="authenticated; else elseBlock">
+    <div *ngIf="!loggedout">
+      <div class="row">
+        <div class="btn-group" style="margin-top: 10px; margin-bottom: 10px; width: 100%;">
+          <a name="home" id="" class="btn btn-primary" style="width: 20%;" [routerLink]="['home']" role="button">Home</a>
+          <a name="list-pets" id="" class="btn btn-success" style="width: 20%;" [routerLink]="['listPets']" role="button">Our
+            Pets</a>
+          <a name="search-pet" id="" class="btn btn-info" style="width: 20%;" [routerLink]="['searchPets']" role="button">Search
+            Pets</a>
+          <a name="add-pet" id="" class="btn btn-warning" style="width: 20%;" [routerLink]="['addPets']" role="button">Add
+            Pets</a>
+          <a name="logout" id="" class="btn btn-danger" (click)="logout()" style="width: 20%;" [routerLink]="['logoutSuccess']"
+            role="button">Logout</a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <router-outlet></router-outlet>
     </div>
   </div>
-  <div class="row">
-    <router-outlet></router-outlet>
-  </div>
+  <ng-template #elseBlock>
+    <app-login (isAuthenticated)="login($event)"></app-login>
+  </ng-template>
 </div>

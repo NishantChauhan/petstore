@@ -1,7 +1,7 @@
 import { Mode } from '../../mode';
 import { PetService } from '../../pet.service';
 import { Pet } from '../../pet';
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-pet-search-by-id',
@@ -15,20 +15,17 @@ export class PetSearchByIdComponent {
 
   constructor(private petService: PetService) {}
 
-
   onSubmit() {
-      this.submitted = true;
+    this.submitted = true;
   }
 
   onKeyUp() {
     this.submitted = false;
   }
 
-  deleteSelectedPet(emittedPet: Pet)   {
-      this.petService.deletePet(emittedPet.id).subscribe(
-        message => {
-          alert(message);
-        }
-      );
+  deleteSelectedPet(emittedPet: Pet) {
+    this.petService.deletePet(emittedPet.id).subscribe(message => {
+      alert(message);
+    });
   }
 }

@@ -26,7 +26,6 @@ import com.petstore.pet.entities.Pet.StatusEnum;
 import com.petstore.pet.entities.PhotoURL;
 import com.petstore.pet.entities.Tag;
 import com.petstore.pet.repository.PetRepository;
-import com.petstore.pet.utilities.LoggerUtil;
 import com.petstore.pet.utilities.filestorage.StorageService;
 
 @Repository
@@ -49,7 +48,7 @@ public class PetRepositoryImpl implements PetRepository {
 
 	@Override
 	public Pet findPetById(Long id) {
-		LoggerUtil.entry(logger);
+		logger.debug("ENTRY");
 		Pet pet = null;
 		Session session = this.sessionFactory.getCurrentSession();
 
@@ -61,19 +60,19 @@ public class PetRepositoryImpl implements PetRepository {
 		if(pets!=null && pets.size()>=1) {
 			pet = pets.get(0);
 			logger.info("Fetched pet with id: " + pet.getId());
-			LoggerUtil.exit(logger);
+			logger.debug("EXIT");
 			return pet;
 
 		}
 
-		LoggerUtil.exit(logger);
+		logger.debug("EXIT");
 		return null;
 	}
 
 	
 	@Override
 	public List<Pet> findPetsByStatus(String status) {
-		LoggerUtil.entry(logger);
+		logger.debug("ENTRY");
 		Session session = this.sessionFactory.getCurrentSession();
 
 		@SuppressWarnings("unchecked")
@@ -83,16 +82,16 @@ public class PetRepositoryImpl implements PetRepository {
 		
 		if(pets!=null && pets.size()>=1) {
 			logger.info("Fetched "+ pets.size()+" pets with status "+ status );
-			LoggerUtil.exit(logger);
+			logger.debug("EXIT");
 			return pets;
 		}
-		LoggerUtil.exit(logger);
+		logger.debug("EXIT");
 		return null;
 	}
 
 	@Override
 	public List<Pet> findPetsByName(String name) {
-		LoggerUtil.entry(logger);
+		logger.debug("ENTRY");
 		Session session = this.sessionFactory.getCurrentSession();
 
 		@SuppressWarnings("unchecked")
@@ -102,16 +101,16 @@ public class PetRepositoryImpl implements PetRepository {
 		
 		if(pets!=null && pets.size()>=1) {
 			logger.info("Fetched "+ pets.size()+" pets with name "+ name );
-			LoggerUtil.exit(logger);
+			logger.debug("EXIT");
 			return pets;
 		}
-		LoggerUtil.exit(logger);
+		logger.debug("EXIT");
 		return null;
 	}
 
 	@Override
 	public List<Pet> findPetsByCategory(String category) {
-		LoggerUtil.entry(logger);
+		logger.debug("ENTRY");
 		Session session = this.sessionFactory.getCurrentSession();
 
 		@SuppressWarnings("unchecked")
@@ -121,16 +120,16 @@ public class PetRepositoryImpl implements PetRepository {
 		
 		if(pets!=null && pets.size()>=1) {
 			logger.info("Fetched "+ pets.size()+" pets with category "+ category );
-			LoggerUtil.exit(logger);
+			logger.debug("EXIT");
 			return pets;
 		}
-		LoggerUtil.exit(logger);
+		logger.debug("EXIT");
 		return null;
 	}
 
 	@Override
 	public List<Pet> findPetsByTags(String tags) {
-		LoggerUtil.entry(logger);
+		logger.debug("ENTRY");
 		
 		if("".equals(tags) || tags == null){
 			return null;
@@ -147,10 +146,10 @@ public class PetRepositoryImpl implements PetRepository {
 		
 		if(pets!=null && pets.size()>=1) {
 			logger.info("Fetched "+ pets.size()+" pets with tags "+ tags );
-			LoggerUtil.exit(logger);
+			logger.debug("EXIT");
 			return pets;
 		}
-		LoggerUtil.exit(logger);
+		logger.debug("EXIT");
 		return null;
 	}
 
@@ -160,7 +159,7 @@ public class PetRepositoryImpl implements PetRepository {
 	@Override
 	public boolean addPet(Pet pet) {
 
-		LoggerUtil.entry(logger);
+		logger.debug("ENTRY");
 
 		try  {
 			Session session = this.sessionFactory.getCurrentSession();
@@ -178,13 +177,13 @@ public class PetRepositoryImpl implements PetRepository {
 			return false;
 		}
 
-		LoggerUtil.exit(logger);
+		logger.debug("EXIT");
 		return true;
 	}
 
 	@Override
 	public boolean deletePet(Long id) {
-		LoggerUtil.entry(logger);
+		logger.debug("ENTRY");
 
 		Pet fetchedPet = findPetById(id);
 
@@ -201,14 +200,14 @@ public class PetRepositoryImpl implements PetRepository {
 		}
 		
 		
-		LoggerUtil.exit(logger);
+		logger.debug("EXIT");
 
 		return true;
 	}
 
 	@Override
 	public boolean updatePet(Long petId, Pet pet) {
-		LoggerUtil.entry(logger);
+		logger.debug("ENTRY");
 
 		try  {
 			Session session = this.sessionFactory.getCurrentSession();
@@ -222,7 +221,7 @@ public class PetRepositoryImpl implements PetRepository {
 			return false;
 		}
 
-		LoggerUtil.exit(logger);
+		logger.debug("EXIT");
 		return true;
 	}
 
@@ -300,7 +299,7 @@ public class PetRepositoryImpl implements PetRepository {
 
 	@Override
 	public List<Category> fetchAllCategories() throws Exception {
-		LoggerUtil.entry(logger);
+		logger.debug("ENTRY");
 		Session session = this.sessionFactory.getCurrentSession();
 
 		@SuppressWarnings("unchecked")
@@ -308,14 +307,14 @@ public class PetRepositoryImpl implements PetRepository {
 		List<Category> categories = query.getResultList();
 		
 
-		LoggerUtil.exit(logger);
+		logger.debug("EXIT");
 		return categories;
 	}
 
 
 	@Override
 	public List<Tag> fetchAllTags() throws Exception {
-		LoggerUtil.entry(logger);
+		logger.debug("ENTRY");
 		Session session = this.sessionFactory.getCurrentSession();
 
 		@SuppressWarnings("unchecked")
@@ -323,12 +322,12 @@ public class PetRepositoryImpl implements PetRepository {
 		List<Tag> tags = query.getResultList();
 		
 
-		LoggerUtil.exit(logger);
+		logger.debug("EXIT");
 		return tags;
 	}
 	
 	public List<Pet> fetchAllPets() throws Exception {
-		LoggerUtil.entry(logger);
+		logger.debug("ENTRY");
 		Session session = this.sessionFactory.getCurrentSession();
 
 		@SuppressWarnings("unchecked")
@@ -336,7 +335,7 @@ public class PetRepositoryImpl implements PetRepository {
 		List<Pet> tags = query.getResultList();
 		
 
-		LoggerUtil.exit(logger);
+		logger.debug("EXIT");
 		return tags;
 		
 	}

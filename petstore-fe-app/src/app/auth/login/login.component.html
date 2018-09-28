@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row">
+    .<div class="jumbotron">
+      <h1 class="display-3">Tom & Jerry Pet Store</h1>
+      <p class="lead">We love our Pets &lt;3 </p>
+      <hr class="my-2">
+    </div>
+  </div>
+  <form #loginForm="ngForm" (ngSubmit)="login()">
+    <!-- <p>{{  getDiagonstics ()| json }}</p> -->
+    <div class="form-inline">
+      <div class="row">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" class="form-control" [(ngModel)]="user.username" style="margin: 1em;" name="username" id="username"
+            aria-describedby="helpId" placeholder="" autocomplete="username" (click)="clear()">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" [(ngModel)]="user.password" style="margin: 1em;" name="password"
+            id="password" aria-describedby="helpId" placeholder="" autocomplete="password" (click)="clear()">
+        </div>
+      </div>
+      <div class="row">
+        <input name="login" id="login" class="btn btn-success" type="submit" value="Login">
+      </div>
+    </div>
+    <div class="row">
+      <div *ngIf="loginStatus &&  loginStatus.status != 'Login Successful'">
+        <div class="alert alert-danger" role="alert" style="margin-top: 10px;">
+          <strong>Please enter a valid username and password</strong>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

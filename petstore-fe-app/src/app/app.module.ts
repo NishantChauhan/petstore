@@ -1,32 +1,37 @@
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule, Routes } from '@angular/router';
+import { AppComponent } from './app.component';
+import { AuthModule } from './auth/auth.module';
+import { LoginComponent } from './auth/login/login.component';
+import { LogoutComponent } from './auth/logout/logout.component';
 import { CacheInterceptorService } from './cache-interceptor.service';
+import { MaintenanceComponent } from './maintenance/maintenance.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PetAdComponent } from './pet-ad/pet-ad.component';
+import { PetBannerDirective } from './pet-banner.directive';
+import { PetBannerComponent } from './pet-banner/pet-banner.component';
+import { PetHomeComponent } from './pet-home/pet-home.component';
+import { AddPetComponent } from './pet-keeper/add-pet/add-pet.component';
 import { EditPetComponent } from './pet-keeper/edit-pet/edit-pet.component';
-import { PetListComponent } from './pet-search/pet-list/pet-list.component';
+import { PetKeeperModule } from './pet-keeper/pet-keeper.module';
 import { PetDisplayFormComponent } from './pet-search/pet-display-form/pet-display-form.component';
+import { PetListComponent } from './pet-search/pet-list/pet-list.component';
 import { PetSearchByIdComponent } from './pet-search/pet-search-by-id/pet-search-by-id.component';
 import { PetSearchComponent } from './pet-search/pet-search.component';
 import { PetSearchModule } from './pet-search/pet-search.module';
-import { BrowserModule, enableDebugTools } from '@angular/platform-browser';
-import { NgModule, Component } from '@angular/core';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppComponent } from './app.component';
-import { RouterModule, Routes } from '@angular/router';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { PetKeeperModule } from './pet-keeper/pet-keeper.module';
-import { AddPetComponent } from './pet-keeper/add-pet/add-pet.component';
-import { MaintenanceComponent } from './maintenance/maintenance.component';
-import { PetHomeComponent } from './pet-home/pet-home.component';
-import { PetBannerDirective } from './pet-banner.directive';
-import { PetBannerComponent } from './pet-banner/pet-banner.component';
-import { PetAdComponent } from './pet-ad/pet-ad.component';
 
 
 // Define Routes in your application
 // The router uses a first-match wins strategy when matching routes
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'logon', pathMatch: 'full' },
   { path: 'home', component: PetHomeComponent, pathMatch: 'full' },
+  { path: 'logon', component: LoginComponent, pathMatch: 'full' },
+  { path: 'logoutSuccess', component: LogoutComponent, pathMatch: 'full' },
   {
     path: 'searchPets',
     component: PetSearchComponent,
@@ -82,6 +87,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     PetSearchModule,
     PetKeeperModule,
+    AuthModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes, { enableTracing: false })
   ],

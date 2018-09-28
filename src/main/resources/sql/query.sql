@@ -3,6 +3,7 @@ SELECT * FROM petstoredb.pet;
 SELECT * FROM petstoredb.category;
 SELECT * FROM petstoredb.tag;
 SELECT * FROM petstoredb.photo_urls;
+SELECT * FROM petstoredb.user;
 -- Queries for Pet Store
 -- Query all pets
 SELECT 

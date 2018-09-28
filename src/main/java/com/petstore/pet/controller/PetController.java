@@ -2,6 +2,8 @@ package com.petstore.pet.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -32,6 +34,8 @@ public class PetController {
 
 	@Autowired
 	StorageService fileStoreService;
+	
+	final static  Logger logger = LoggerFactory.getLogger(PetController.class);
 
 	/** 
 	 * Regex Mapping to support Angular Mapping within Tomcat 
@@ -54,6 +58,7 @@ public class PetController {
 		return new ResponseEntity<Resource>(imageFile, responseHeaders, HttpStatus.CREATED);
 	}
 
+	
 	/**
 	 * URL mapping for fetching pet based on Pet Id
 	 * 
