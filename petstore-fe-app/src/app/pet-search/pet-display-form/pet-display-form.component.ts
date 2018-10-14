@@ -48,7 +48,7 @@ export class PetDisplayFormComponent implements OnInit {
   }
 
   editPet() {
-    this.router.navigate(['editPetById', this.displayedPet.id]);
+    this.router.navigate(['api/editPetById', this.displayedPet.id]);
   }
 
   deletePet() {
@@ -63,7 +63,7 @@ export class PetDisplayFormComponent implements OnInit {
       )
     ) {
       this.deleteRequest.emit(this.displayedPet);
-      this.router.navigate(['searchPets']);
+      this.router.navigate(['api/searchPets']);
     }
   }
 }

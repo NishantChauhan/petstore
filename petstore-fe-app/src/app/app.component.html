@@ -1,13 +1,47 @@
 <div class="container">
   <div class="row">
-    <div class="btn-group" style="margin-top: 10px; margin-bottom: 10px; width: 100%;">
-      <a name="home" id="" class="btn btn-primary" style="width: 25%;" [routerLink]="['home']" role="button">Home</a>
-      <a name="list-pets" id="" class="btn btn-success" style="width: 25%;" [routerLink]="['listPets']" role="button">Our Pets</a>
-      <a name="search-pet" id="" class="btn btn-info" style="width: 25%;" [routerLink]="['searchPets']" role="button">Search Pets</a>
-      <a name="add-pet" id="" class="btn btn-danger" style="width: 25%;" [routerLink]="['addPets']" role="button">Add Pets</a>
+    <!-- .<div class="jumbotron"> -->
+    <h2 class="display-3" style="text-align: center;">Tom & Jerry Pet Store</h2>
+    <p class="lead" style="text-align: center;">We love our Pets &lt;3 </p>
+    <hr class="my-2">
+    <!-- </div> -->
+  </div>
+  <div *ngIf="authenticated; else elseBlock">
+    <div *ngIf="!loggedout">
+      <div *ngIf="user.role == 'ADMIN'; else userBlock">
+        <div class="row">
+          <div class="btn-group" style="margin-top: 10px; margin-bottom: 10px; width: 100%;">
+            <a name="home" id="" class="btn btn-primary" style="width: 20%;" [routerLink]="['api/home']" role="button">Home</a>
+            <a name="list-pets" id="" class="btn btn-success" style="width: 20%;" [routerLink]="['api/listPets']" role="button">Our
+              Pets</a>
+            <a name="search-pet" id="" class="btn btn-info" style="width: 20%;" [routerLink]="['api/searchPets']" role="button">Search
+              Pets</a>
+            <a name="add-pet" id="" class="btn btn-warning" style="width: 20%;" [routerLink]="['api/addPets']" role="button">Add
+              Pets</a>
+            <a name="logout" id="" class="btn btn-danger" (click)="logout()" style="width: 20%;" [routerLink]="['api/logoutSuccess']"
+              role="button">Logout, {{(user.username)? (user.username): 'User' }}</a>
+          </div>
+        </div>
+      </div>
+      <ng-template #userBlock>
+        <div class="row">
+          <div class="btn-group" style="margin-top: 10px; margin-bottom: 10px; width: 100%;">
+            <a name="home" id="" class="btn btn-primary" style="width: 25%;" [routerLink]="['api/home']" role="button">Home</a>
+            <a name="list-pets" id="" class="btn btn-success" style="width: 25%;" [routerLink]="['api/listPets']" role="button">Our
+              Pets</a>
+            <a name="search-pet" id="" class="btn btn-info" style="width: 25%;" [routerLink]="['api/searchPets']" role="button">Search
+              Pets</a>
+            <a name="logout" id="" class="btn btn-danger" (click)="logout()" style="width: 25%;" [routerLink]="['api/logoutSuccess']"
+              role="button">Logout, {{(user.username)? (user.username): 'User' }}</a>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+    <div class="row">
+      <router-outlet></router-outlet>
     </div>
   </div>
-  <div class="row">
-    <router-outlet></router-outlet>
-  </div>
+  <ng-template #elseBlock>
+    <app-login (appUser)="login($event)"></app-login>
+  </ng-template>
 </div>

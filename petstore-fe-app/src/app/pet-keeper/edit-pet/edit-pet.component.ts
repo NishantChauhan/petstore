@@ -48,8 +48,12 @@ export class EditPetComponent implements OnInit {
   updatePet() {
 
     this.petService.updatePetByNameStatus( this.editablePet.id, this.editablePet.name, this.editablePet.status).subscribe(
-      () => {
-        alert('Pet updated successfully !!');
+      updatedPet => {
+        if (updatedPet){
+          alert('Pet updated successfully !!');
+        } else {
+          alert('Pet not updated !!');
+        }
         this.location.back();
       }
     )

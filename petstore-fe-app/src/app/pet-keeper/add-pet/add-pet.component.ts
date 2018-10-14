@@ -4,7 +4,6 @@ import { Category, Tag } from '../../pet';
 import { Component, OnInit } from '@angular/core';
 import { Pet } from '../../pet';
 
-
 @Component({
   selector: 'app-add-pet',
   templateUrl: './add-pet.component.html',
@@ -43,7 +42,7 @@ export class AddPetComponent implements OnInit {
       .getCategories()
       .subscribe(categories => (this.categories = categories));
   }
-/*
+  /*
   public diagnostic(): string {
     return JSON.stringify(this.pet);
   }
@@ -62,7 +61,6 @@ export class AddPetComponent implements OnInit {
       }
     }
   }
-
 
   public uploadPhoto(files: FileList) {
     this.photos = files;
@@ -83,8 +81,12 @@ export class AddPetComponent implements OnInit {
   }
   public addPet() {
     this.petService.addPet(this.pet).subscribe(addedPet => {
-      this.pet = addedPet;
-      this.petAdded = true;
+      if (addedPet) {
+        this.pet = addedPet;
+        this.petAdded = true;
+      } else {
+        alert('Unable to add Pet !!');
+      }
     });
   }
 }

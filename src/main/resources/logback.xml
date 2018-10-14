@@ -13,7 +13,8 @@
   </appender>
 <logger name="com.petstore" level="DEBUG"/>
 <logger name="org.hibernate.SQL" level="DEBUG"/>
-  <root level="ERROR">
+<logger name="com.zaxxer.hikari" level="OFF"/>
+  <root level="DEBUG">
     <appender-ref ref="STDOUT" />
   </root>
 </configuration>

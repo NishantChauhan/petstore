@@ -1,34 +1,40 @@
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule, Routes } from '@angular/router';
+import { AppComponent } from './app.component';
+import { AuthModule } from './auth/auth.module';
+import { LoginComponent } from './auth/login/login.component';
 import { CacheInterceptorService } from './cache-interceptor.service';
+import { MaintenanceComponent } from './maintenance/maintenance.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PetAdComponent } from './pet-ad/pet-ad.component';
+import { PetBannerDirective } from './pet-banner.directive';
+import { PetBannerComponent } from './pet-banner/pet-banner.component';
+import { PetHomeComponent } from './pet-home/pet-home.component';
+import { AddPetComponent } from './pet-keeper/add-pet/add-pet.component';
 import { EditPetComponent } from './pet-keeper/edit-pet/edit-pet.component';
-import { PetListComponent } from './pet-search/pet-list/pet-list.component';
+import { PetKeeperModule } from './pet-keeper/pet-keeper.module';
 import { PetDisplayFormComponent } from './pet-search/pet-display-form/pet-display-form.component';
+import { PetListComponent } from './pet-search/pet-list/pet-list.component';
 import { PetSearchByIdComponent } from './pet-search/pet-search-by-id/pet-search-by-id.component';
 import { PetSearchComponent } from './pet-search/pet-search.component';
 import { PetSearchModule } from './pet-search/pet-search.module';
-import { BrowserModule, enableDebugTools } from '@angular/platform-browser';
-import { NgModule, Component } from '@angular/core';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LogoutComponent } from './auth/logout/logout.component';
 
-import { AppComponent } from './app.component';
-import { RouterModule, Routes } from '@angular/router';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { PetKeeperModule } from './pet-keeper/pet-keeper.module';
-import { AddPetComponent } from './pet-keeper/add-pet/add-pet.component';
-import { MaintenanceComponent } from './maintenance/maintenance.component';
-import { PetHomeComponent } from './pet-home/pet-home.component';
-import { PetBannerDirective } from './pet-banner.directive';
-import { PetBannerComponent } from './pet-banner/pet-banner.component';
-import { PetAdComponent } from './pet-ad/pet-ad.component';
 
 
 // Define Routes in your application
 // The router uses a first-match wins strategy when matching routes
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: PetHomeComponent, pathMatch: 'full' },
+  { path: '', redirectTo: 'api/logon', pathMatch: 'full' },
+  // { path: '', redirectTo: 'api/home', pathMatch: 'full' },
+  { path: 'api/home', component: PetHomeComponent, pathMatch: 'full' },
+  { path: 'api/logon', component: LoginComponent, pathMatch: 'full' },
+  { path: 'api/logoutSuccess', component: LogoutComponent, pathMatch: 'full' },
   {
-    path: 'searchPets',
+    path: 'api/searchPets',
     component: PetSearchComponent,
     children: [
       {
@@ -61,10 +67,10 @@ const appRoutes: Routes = [
       }
     ]
   },
-  { path: 'addPets', component: AddPetComponent },
-  { path: 'editPetById/:id', component: EditPetComponent },
-  { path: 'listPets', component: PetListComponent, pathMatch: 'full' },
-  { path: '**', component: PageNotFoundComponent }
+  { path: 'api/addPets', component: AddPetComponent },
+  { path: 'api/editPetById/:id', component: EditPetComponent },
+  { path: 'api/listPets', component: PetListComponent, pathMatch: 'full' },
+  { path: 'api/**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
@@ -82,6 +88,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     PetSearchModule,
     PetKeeperModule,
+    AuthModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes, { enableTracing: false })
   ],

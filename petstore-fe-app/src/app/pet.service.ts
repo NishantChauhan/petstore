@@ -8,6 +8,7 @@ import {
   HttpParams
 } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
+import { AuthService } from './auth/auth.service';
 
 const httpOptionsJson = {
   headers: new HttpHeaders({
@@ -26,7 +27,8 @@ const httpOptionsJson = {
 })
 export class PetService {
   private petStoreUrl = 'http://localhost:8080'; // URL to web api
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
+
 
   getPet(id: number): Observable<Pet> {
     const url = `${this.petStoreUrl}/pet/${id}`;
@@ -69,6 +71,7 @@ export class PetService {
   }
 
   getAllPets(): Observable<Pet[]> {
+
     const url = `${this.petStoreUrl}/fetchAllPets`;
     return this.http.get<Pet[]>(url).pipe(
       tap(pets => {
@@ -93,7 +96,7 @@ export class PetService {
       tap(() => {
         // console.log(pet);
       }),
-      catchError(this.handleError<Pet>(` pet=${pet}`))
+      catchError(undefined)
     );
   }
 
@@ -108,7 +111,7 @@ export class PetService {
       tap(pet => {
         // console.log(pet);
       }),
-      catchError(this.handleError<Pet>(` id=${id}`))
+      catchError(undefined)
     );
   }
 
