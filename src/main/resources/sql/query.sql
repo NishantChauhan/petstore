@@ -3,6 +3,12 @@ SELECT * FROM petstoredb.pet;
 SELECT * FROM petstoredb.category;
 SELECT * FROM petstoredb.tag;
 SELECT * FROM petstoredb.photo_urls;
+
+-- Security
+SELECT * FROM petstoredb.user;
+SELECT * FROM petstoredb.OAUTH_CLIENT_DETAILS;
+SELECT * FROM petstoredb.oauth_access_token;
+
 -- Queries for Pet Store
 -- Query all pets
 SELECT 
@@ -29,7 +35,7 @@ WHERE
 ;
 
 -- Replace photoURL
-update photo_urls set url = replace(url,'ph','../../assets/ph') where pet_id_fk in (1,2,3) ;
+-- update photo_urls set url = replace(url,'ph','../../assets/ph') where pet_id_fk in (1,2,3) ;
 
 -- query pet 
 SELECT 

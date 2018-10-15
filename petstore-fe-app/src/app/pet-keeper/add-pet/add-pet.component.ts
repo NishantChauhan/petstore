@@ -30,7 +30,6 @@ export class AddPetComponent implements OnInit {
         for (let i = 0; i < this.tags.length; i++) {
           if (this.tags) {
             this.tagsChecked.push(false);
-            // console.log(this.tags[i] + ' = ' + this.tagsChecked[i]);
           }
         }
       }
@@ -64,7 +63,6 @@ export class AddPetComponent implements OnInit {
 
   public uploadPhoto(files: FileList) {
     this.photos = files;
-    // console.log(files);
     if (this.photos && this.photos.length > 0) {
       for (let i = 0; i < this.photos.length; i++) {
         const formData = new FormData();
@@ -73,7 +71,6 @@ export class AddPetComponent implements OnInit {
           .uploadPhoto(this.pet.id, formData)
           .subscribe(uploadedPet => {
             this.pet = uploadedPet;
-            // console.log(uploadedPet);
             this.submitted = true;
           });
       }

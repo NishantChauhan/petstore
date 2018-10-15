@@ -81,6 +81,7 @@ public class UserRepositoryImpl implements UserRepository {
 		logger.debug("encodedPassword = " + encodedPassword);
 		encodedPassword = password;
 
+
 		if(!encodedPassword.equals(user.getPassword())) {
 			throw new BadPasswordException("Invalid Password");
 		}

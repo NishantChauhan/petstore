@@ -11,8 +11,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.petstore.security.services.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -24,6 +25,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	PasswordEncoder encoder;
+
+	@Autowired
+	private CustomUserDetailsService customUserDetailsService;
 	
 	@Bean
 	@Override
@@ -31,30 +35,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 	
-//	@Autowired
-//    private CustomUserDetailsService customUserDetailsService;
    
     @Autowired
-    public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-        System.out.println("inside OAuth2SecurityConfiguration : globalUserDetails()");
-        auth.inMemoryAuthentication()
-        .withUser("a").password(encoder.encode("p")).authorities(new SimpleGrantedAuthority("ADMIN")).roles("ADMIN").and()
-        .withUser("u").password(encoder.encode("p")).authorities(new SimpleGrantedAuthority("USER")).roles("USER");
-//    	auth.userDetailsService(customUserDetailsService).passwordEncoder(encoder());
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+    	auth.userDetailsService(customUserDetailsService).passwordEncoder(encoder);
     }
     
     @Override
     public void configure( WebSecurity web ) throws Exception {
-        web.ignoring().antMatchers( "/resources/**","/","/api/**/{[path:[^\\\\.]*}","/main*","/runtime*","/polyfills*","/styles*","/photoURL/**/","/assets/**/*");
+        web.ignoring().antMatchers( "/favicon.ico","/error","/resources/**","/","/api/**/{[path:[^\\\\.]*}","/main*","/runtime*","/polyfills*","/styles*","/photoURL/**/","/assets/**/*");
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http
         .authorizeRequests()
-        .antMatchers("/api/**/{[path:[^\\\\.]*}","/","/main*","/runtime*","/polyfills*","/styles*","/photoURL/**/*","/assets/**/*").permitAll()//"/**/{[path:[^\\\\.]*}",
-        .and().formLogin()
-        .loginPage("/api/logon")
+        .antMatchers("/error","/favicon.ico","/api/**/{[path:[^\\\\.]*}","/","/main*","/runtime*","/polyfills*","/styles*","/photoURL/**/*","/assets/**/*").permitAll()//"/**/{[path:[^\\\\.]*}",
+//        .and().formLogin()
+//        .loginPage("/api/logon")
 //        .and()
 //        .userDetailsService(customUserDetailsService)
         ;        

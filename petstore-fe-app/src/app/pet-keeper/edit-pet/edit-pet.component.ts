@@ -39,7 +39,6 @@ export class EditPetComponent implements OnInit {
             this.editablePet = uploadedPet;
             this.url = 'http://localhost:8080/' + this.editablePet.photoUrls[0].url;
             alert('Image Uploaded successfully !!');
-            // console.log(this.editablePet);
           });
       }
     }

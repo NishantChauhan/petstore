@@ -13,7 +13,6 @@ export class LogoutComponent implements OnInit {
 
   ngOnInit() {
     this.authService.logout().subscribe(executionStatus => {
-      // console.log(executionStatus);
       this.logoutSuccess = true;
     });
   }

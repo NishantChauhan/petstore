@@ -18,7 +18,6 @@ export class LoginComponent {
 
   login() {
     this.authService.obtainToken(this.user).subscribe(tokenExecutionStatus => {
-      console.log( tokenExecutionStatus);
       this.loginStatus = tokenExecutionStatus;
       if (tokenExecutionStatus.status === 'Login Successful') {
         this.authService.getUser().subscribe(

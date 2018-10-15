@@ -28,9 +28,6 @@ export class AuthService {
   getUser(): Observable<User> {
     const url = `${this.serverUrl}/user/${this.authUser.username}`;
     return this.http.get<User>(url).pipe(
-      tap(user => {
-       console.log(user);
-      }),
       catchError(undefined)
     );
   }
@@ -40,7 +37,6 @@ export class AuthService {
   }
 
   obtainToken(user: User): Observable<ExecutionStatus> {
-    console.log('obtain Token');
     this.authUser = user;
     const  httpHeader = new HttpHeaders({
       'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'
@@ -55,15 +51,11 @@ export class AuthService {
     return this.http
       .post<any>(url,  options)
       .pipe(
-        // tap(data => {
-        //   console.log(data);
-        // }),
         map ( data => {
                 const execStatus = new ExecutionStatus();
                 execStatus.status = 'Login Successful';
                 execStatus.data = data;
                 this.accessToken = data.access_token;
-                // console.log(execStatus.data);
                 return execStatus;
             }),
         catchError(this.handleError())
@@ -82,9 +74,6 @@ export class AuthService {
     const options = { headers: httpHeader, withCredentials: true };
 
     return this.http.post<ExecutionStatus>(url, options).pipe(
-      tap(data => {
-        console.log(data);
-      }),
       catchError(this.handleError<ExecutionStatus>())
     );
   }
