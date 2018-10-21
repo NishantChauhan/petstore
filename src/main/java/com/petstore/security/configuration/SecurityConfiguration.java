@@ -44,14 +44,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     
     @Override
     public void configure( WebSecurity web ) throws Exception {
-        web.ignoring().antMatchers( "/favicon.ico","/error","/resources/**","/","/api/**/{[path:[^\\\\.]*}","/main*","/runtime*","/polyfills*","/styles*","/photoURL/**/","/assets/**/*");
+        web.ignoring().antMatchers( "/favicon.ico","/error","/resources/**","/","/api/**/{[path:[^\\\\.]*}","/main*","/runtime*","/vendor*","/polyfills*","/styles*","/photoURL/**/","/assets/**/*");
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http
         .authorizeRequests()
-        .antMatchers("/error","/favicon.ico","/api/**/{[path:[^\\\\.]*}","/","/main*","/runtime*","/polyfills*","/styles*","/photoURL/**/*","/assets/**/*").permitAll()//"/**/{[path:[^\\\\.]*}",
+        .antMatchers("/error","/favicon.ico","/api/**/{[path:[^\\\\.]*}","/","/main*","/runtime*","/polyfills*","/styles*","/vendor*","/photoURL/**/*","/assets/**/*").permitAll()//"/**/{[path:[^\\\\.]*}",
 //        .and().formLogin()
 //        .loginPage("/api/logon")
 //        .and()
