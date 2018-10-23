@@ -133,9 +133,8 @@
 						</goals>
 						<phase>generate-resources</phase>
 						<configuration>
-							<executable>npm</executable>
+							<executable>npx</executable>
 							<arguments>
-								<argument>run-script</argument>
 								<argument>ng</argument>
 								<argument>build</argument>
 								<argument>--prod</argument>
