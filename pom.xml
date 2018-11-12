@@ -133,13 +133,10 @@
 						</goals>
 						<phase>generate-resources</phase>
 						<configuration>
-							<executable>npx</executable>
+							<executable>npm</executable>
 							<arguments>
-								<argument>ng</argument>
-								<argument>build</argument>
-								<argument>--prod</argument>
-								<argument>--aot</argument>
-								<argument>petstore-fe-app</argument>
+								<argument>run</argument>
+								<argument>buildprod</argument>
 							</arguments>
 							<workingDirectory>${basedir}/petstore-fe-app</workingDirectory>
 						</configuration>

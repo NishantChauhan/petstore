@@ -4,7 +4,7 @@ import { User } from './auth/user';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   user: User;
@@ -16,7 +16,7 @@ export class AppComponent {
 
   login(appUser: User) {
     this.user = appUser;
-    this.authenticated = appUser ? true : false ;
+    this.authenticated = appUser ? true : false;
   }
   logout() {
     this.loggedout = true;

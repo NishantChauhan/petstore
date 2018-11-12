@@ -7,7 +7,7 @@ import { User } from './../user';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   user = new User();
@@ -20,13 +20,11 @@ export class LoginComponent {
     this.authService.obtainToken(this.user).subscribe(tokenExecutionStatus => {
       this.loginStatus = tokenExecutionStatus;
       if (tokenExecutionStatus.status === 'Login Successful') {
-        this.authService.getUser().subscribe(
-          roleUser => {
+        this.authService.getUser().subscribe(roleUser => {
           this.user = roleUser;
           this.appUser.emit(this.user);
           this.router.navigateByUrl('api/home');
-          }
-        );
+        });
       } else {
         this.appUser.emit(undefined);
       }
