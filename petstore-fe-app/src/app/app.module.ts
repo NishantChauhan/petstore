@@ -28,12 +28,13 @@ import { PetSearchModule } from './pet-search/pet-search.module';
 // Define Routes in your application
 // The router uses a first-match wins strategy when matching routes
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'logon', pathMatch: 'full' },
-  { path: 'home', component: PetHomeComponent, pathMatch: 'full' },
-  { path: 'logon', component: LoginComponent, pathMatch: 'full' },
-  { path: 'logoutSuccess', component: LogoutComponent, pathMatch: 'full' },
+  { path: '', redirectTo: 'api/logon', pathMatch: 'full' },
+  // { path: '', redirectTo: 'api/home', pathMatch: 'full' },
+  { path: 'api/home', component: PetHomeComponent, pathMatch: 'full' },
+  { path: 'api/logon', component: LoginComponent, pathMatch: 'full' },
+  { path: 'api/logoutSuccess', component: LogoutComponent, pathMatch: 'full' },
   {
-    path: 'searchPets',
+    path: 'api/searchPets',
     component: PetSearchComponent,
     children: [
       {
@@ -66,10 +67,10 @@ const appRoutes: Routes = [
       }
     ]
   },
-  { path: 'addPets', component: AddPetComponent },
-  { path: 'editPetById/:id', component: EditPetComponent },
-  { path: 'listPets', component: PetListComponent, pathMatch: 'full' },
-  { path: '**', component: PageNotFoundComponent }
+  { path: 'api/addPets', component: AddPetComponent },
+  { path: 'api/editPetById/:id', component: EditPetComponent },
+  { path: 'api/listPets', component: PetListComponent, pathMatch: 'full' },
+  { path: 'api/**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

@@ -1,6 +1,6 @@
-import { AuthService } from './../auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from './../auth.service';
 
 @Component({
   selector: 'app-logout',
@@ -13,7 +13,6 @@ export class LogoutComponent implements OnInit {
 
   ngOnInit() {
     this.authService.logout().subscribe(executionStatus => {
-      console.log(executionStatus);
       this.logoutSuccess = true;
     });
   }

@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { ExecutionStatus } from './execution-status';
 import { User } from './user';
 
@@ -10,9 +10,14 @@ import { User } from './user';
 })
 export class AuthService {
   serverUrl = 'http://localhost:8080';
-  headers: HttpHeaders;
+  // headers: HttpHeaders;
   authUser: User;
   sessionValid: boolean;
+  accessToken: string;
+  grant_type = 'password';
+  client_id = 'petapp';
+  client_secret = 'pEt@!23';
+
 
   constructor(private http: HttpClient) {}
 
@@ -20,56 +25,55 @@ export class AuthService {
     return this.sessionValid;
   }
 
-  login(user: User): Observable<ExecutionStatus> {
+  getUser(): Observable<User> {
+    const url = `${this.serverUrl}/user/${this.authUser.username}`;
+    return this.http.get<User>(url).pipe(
+      catchError(undefined)
+    );
+  }
+
+  getCurrenToken(): string {
+    return this.accessToken;
+  }
+
+  obtainToken(user: User): Observable<ExecutionStatus> {
     this.authUser = user;
-    // const params = new URLSearchParams();
-    // params.append('username', user.username);
-    // params.append('password', user.password);
-    // params.append('grant_type', 'password');
-    // params.append('client_id', 'petapp');
-    this.headers = new HttpHeaders({
-      'Content-type': 'application/x-www-form-urlencoded; charset=utf-8',
-      Authorization: 'Basic ' + btoa('petstoreapp:pEt@!23')
+    const  httpHeader = new HttpHeaders({
+      'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'
+      , 'Authorization': 'Basic ' + btoa(this.client_id + ':' + this.client_secret)
     });
-
-    // this.headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const url = `${this.serverUrl}/login?username=${user.username}&password=${user.password}`;
-
-    // const url = `${this.serverUrl}/login`;
-    const options = { headers: this.headers, withCredentials: true };
-
+    const url = `${this.serverUrl}/oauth/token?username=${this.authUser.username}&password=${this.authUser.password}`
+    + `&grant_type=${this.grant_type}&client_id=${this.client_id}`
+    + `&client_secret=${this.client_secret}`
+    ;
+    // const options = { headers: httpHeader };
+    const options = { headers: httpHeader, withCredentials: true };
     return this.http
-      .post<ExecutionStatus>(url, options)
+      .post<any>(url,  options)
       .pipe(
-        tap(data => {
-          console.log(data);
-        }),
-        catchError(this.handleError<ExecutionStatus>())
+        map ( data => {
+                const execStatus = new ExecutionStatus();
+                execStatus.status = 'Login Successful';
+                execStatus.data = data;
+                this.accessToken = data.access_token;
+                return execStatus;
+            }),
+        catchError(this.handleError())
       );
   }
 
+
   logout(): Observable<ExecutionStatus> {
-    // const params = new URLSearchParams();
-    // params.append('username', this.authUser.username);
-    // params.append('password', this.authUser.password);
-    // params.append('grant_type', 'password');
-    // params.append('client_id', 'petapp');
-    this.headers = new HttpHeaders({
-      'Content-type': 'application/x-www-form-urlencoded; charset=utf-8',
-      Authorization: 'Basic ' + btoa('petstoreapp:pEt@!23')
+    const httpHeader = new HttpHeaders({
+      'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'
     });
-
-    // this.headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const url = `${this.serverUrl}/logout?username=${this.authUser.username}&password=${this.authUser.password}`;
-
-    // const url = `${this.serverUrl}/login`;
-
-    const options = { headers: this.headers, withCredentials: true };
+/*     const url = `${this.serverUrl}/logout?username=${this.authUser.username}&password=${this.authUser.password}` +
+    `&grant_type=${this.grant_type}&client_id=${this.client_id}&client_secret=${this.client_secret}`;
+ */
+    const url = `${this.serverUrl}/logout`;
+    const options = { headers: httpHeader, withCredentials: true };
 
     return this.http.post<ExecutionStatus>(url, options).pipe(
-      tap(data => {
-        console.log(data);
-      }),
       catchError(this.handleError<ExecutionStatus>())
     );
   }
@@ -85,7 +89,9 @@ export class AuthService {
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
       if (error.url === 'http://localhost:8080/logon?error') {
-        result = { status: 'Invalid Login' };
+        result = { status: 'Invalid Login', data: error };
+      } else {
+        result = {status: error.message,  data: error};
       }
 
       // TODO: better job of transforming error for user consumption

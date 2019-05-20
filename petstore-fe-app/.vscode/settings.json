@@ -1,3 +1,30 @@
 {
-   "prettier.singleQuote": true
+  "editor.tabSize": 2,
+  "editor.rulers": [90, 140],
+  "files.trimTrailingWhitespace": true,
+  "files.autoSave": "onFocusChange",
+  "editor.cursorBlinking": "solid",
+  "workbench.iconTheme": "material-icon-theme", // Following setting requires Material Icon Theme Extension
+  "git.enableSmartCommit": true,
+  "editor.autoIndent": true,
+  "debug.openExplorerOnEnd": true,
+  "auto-close-tag.SublimeText3Mode": true, // Following setting requires Auto Close Tag                                                     Extension
+  "explorer.openEditors.visible": 0,
+  "editor.minimap.enabled": false,
+  "html.autoClosingTags": false,
+  "git.confirmSync": false,
+  "editor.formatOnType": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "prettier.printWidth": 90, // Following setting requires Prettier Extension
+  // "prettier.semi": false, // StandardJS
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "es5",
+  // "typescriptHero.imports.insertSemicolons": false,// StandardJS
+  // Following setting requires TypeScriptHero Extension
+  "typescriptHero.imports.multiLineWrapThreshold": 90,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  },
+  "npm.enableScriptExplorer": true
 }

@@ -9,7 +9,7 @@
           <ng-template #elseBlock>
             <img src="assets/BrokenImage.jpg" style="width: 133px; height: 117px; margin-right:10px;" class="img-fluid"  alt="">
           </ng-template>
-          <a [routerLink]="['/searchPets/petById',pet.id]">
+          <a [routerLink]="['/api/searchPets/petById',pet.id]">
             <figcaption>{{pet.name}}</figcaption>
           </a>
         </figure>

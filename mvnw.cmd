@@ -1,3 +1,7 @@
+set JAVA_HOME="C:\Installers\Java\jdk1.8.0_152"
+set PATH=C:\Installers\Java\jdk1.8.0_152\bin;C:\Installers\Maven\apache-maven-3.5.3\bin;%PATH%
+
+
 @REM ----------------------------------------------------------------------------
 @REM Licensed to the Apache Software Foundation (ASF) under one
 @REM or more contributor license agreements.  See the NOTICE file

@@ -39,7 +39,6 @@ export class EditPetComponent implements OnInit {
             this.editablePet = uploadedPet;
             this.url = 'http://localhost:8080/' + this.editablePet.photoUrls[0].url;
             alert('Image Uploaded successfully !!');
-            // console.log(this.editablePet);
           });
       }
     }
@@ -48,8 +47,12 @@ export class EditPetComponent implements OnInit {
   updatePet() {
 
     this.petService.updatePetByNameStatus( this.editablePet.id, this.editablePet.name, this.editablePet.status).subscribe(
-      () => {
-        alert('Pet updated successfully !!');
+      updatedPet => {
+        if (updatedPet){
+          alert('Pet updated successfully !!');
+        } else {
+          alert('Pet not updated !!');
+        }
         this.location.back();
       }
     )

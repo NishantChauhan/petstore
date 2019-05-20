@@ -1,11 +1,4 @@
 <div class="container">
-  <div class="row">
-    .<div class="jumbotron">
-      <h1 class="display-3">Tom & Jerry Pet Store</h1>
-      <p class="lead">We love our Pets &lt;3 </p>
-      <hr class="my-2">
-    </div>
-  </div>
   <form #loginForm="ngForm" (ngSubmit)="login()">
     <!-- <p>{{  getDiagonstics ()| json }}</p> -->
     <div class="form-inline">
@@ -31,6 +24,9 @@
       <div *ngIf="loginStatus &&  loginStatus.status != 'Login Successful'">
         <div class="alert alert-danger" role="alert" style="margin-top: 10px;">
           <strong>Please enter a valid username and password</strong>
+        </div>
+        <div class="alert alert-warning" role="alert">
+          <strong> Request failed : {{loginStatus.status }}</strong>
         </div>
       </div>
     </div>

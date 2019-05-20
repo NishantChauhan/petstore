@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './../auth.service';
 import { ExecutionStatus } from './../execution-status';
@@ -7,23 +7,26 @@ import { User } from './../user';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   user = new User();
-  loginStatus: ExecutionStatus;
   @Output()
-  isAuthenticated = new EventEmitter<boolean>();
+  appUser = new EventEmitter<User>();
+  loginStatus: ExecutionStatus;
   constructor(private authService: AuthService, private router: Router) {}
 
   login() {
-    this.authService.login(this.user).subscribe(executionStatus => {
-      this.loginStatus = executionStatus;
-      if (executionStatus.status === 'Login Successful') {
-        this.isAuthenticated.emit(true);
-        this.router.navigateByUrl('/home');
+    this.authService.obtainToken(this.user).subscribe(tokenExecutionStatus => {
+      this.loginStatus = tokenExecutionStatus;
+      if (tokenExecutionStatus.status === 'Login Successful') {
+        this.authService.getUser().subscribe(roleUser => {
+          this.user = roleUser;
+          this.appUser.emit(this.user);
+          this.router.navigateByUrl('api/home');
+        });
       } else {
-        this.isAuthenticated.emit(false);
+        this.appUser.emit(undefined);
       }
     });
   }

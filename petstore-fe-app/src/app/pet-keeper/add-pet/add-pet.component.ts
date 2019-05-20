@@ -4,7 +4,6 @@ import { Category, Tag } from '../../pet';
 import { Component, OnInit } from '@angular/core';
 import { Pet } from '../../pet';
 
-
 @Component({
   selector: 'app-add-pet',
   templateUrl: './add-pet.component.html',
@@ -31,7 +30,6 @@ export class AddPetComponent implements OnInit {
         for (let i = 0; i < this.tags.length; i++) {
           if (this.tags) {
             this.tagsChecked.push(false);
-            // console.log(this.tags[i] + ' = ' + this.tagsChecked[i]);
           }
         }
       }
@@ -43,7 +41,7 @@ export class AddPetComponent implements OnInit {
       .getCategories()
       .subscribe(categories => (this.categories = categories));
   }
-/*
+  /*
   public diagnostic(): string {
     return JSON.stringify(this.pet);
   }
@@ -63,10 +61,8 @@ export class AddPetComponent implements OnInit {
     }
   }
 
-
   public uploadPhoto(files: FileList) {
     this.photos = files;
-    // console.log(files);
     if (this.photos && this.photos.length > 0) {
       for (let i = 0; i < this.photos.length; i++) {
         const formData = new FormData();
@@ -75,7 +71,6 @@ export class AddPetComponent implements OnInit {
           .uploadPhoto(this.pet.id, formData)
           .subscribe(uploadedPet => {
             this.pet = uploadedPet;
-            // console.log(uploadedPet);
             this.submitted = true;
           });
       }
@@ -83,8 +78,12 @@ export class AddPetComponent implements OnInit {
   }
   public addPet() {
     this.petService.addPet(this.pet).subscribe(addedPet => {
-      this.pet = addedPet;
-      this.petAdded = true;
+      if (addedPet) {
+        this.pet = addedPet;
+        this.petAdded = true;
+      } else {
+        alert('Unable to add Pet !!');
+      }
     });
   }
 }
