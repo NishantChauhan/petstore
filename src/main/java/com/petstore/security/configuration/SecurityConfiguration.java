@@ -14,6 +14,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.petstore.security.services.CustomUserDetailsService;
+/**
+ * @author Nishant Chauhan
+ * */
 
 @Configuration
 @EnableWebSecurity
