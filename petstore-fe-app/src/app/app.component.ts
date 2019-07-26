@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from './auth/auth.service';
 import { User } from './auth/user';
 
 @Component({
@@ -9,10 +10,15 @@ import { User } from './auth/user';
 export class AppComponent {
   user: User;
   title = 'app';
-  authenticated = false;
+  authenticated: boolean;
   loggedout: boolean;
-
-  constructor() {}
+  constructor(private authservice: AuthService) {
+    this.authenticated = authservice.getUserStatus();
+    if (this.authenticated) {
+      this.user = authservice.getUserDetails();
+      this.loggedout = !this.authenticated;
+    }
+  }
 
   login(appUser: User) {
     this.user = appUser;

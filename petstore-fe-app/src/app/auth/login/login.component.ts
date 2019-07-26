@@ -22,6 +22,8 @@ export class LoginComponent {
       if (tokenExecutionStatus.status === 'Login Successful') {
         this.authService.getUser().subscribe(roleUser => {
           this.user = roleUser;
+          localStorage.setItem('petapp-username', roleUser.username);
+          localStorage.setItem('petapp-userrole', roleUser.role);
           this.appUser.emit(this.user);
           this.router.navigateByUrl('api/home');
         });
